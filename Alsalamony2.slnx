@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Alsalamony2/Alsalamony2.csproj" />
+  <Project Path="Application/Application.csproj" />
+  <Project Path="Domain/Domain.csproj" />
+  <Project Path="Infrastructure/Infrastructure.csproj" />
+</Solution>
