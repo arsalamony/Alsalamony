@@ -2,6 +2,7 @@
 using Alsalamony.Domain.Consts;
 using Alsalamony.Infrastructure.Authentication;
 using Alsalamony.Utilities;
+using Alsalamony2.Errors;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
@@ -44,7 +45,7 @@ public static class DependencyInjection
         services.AddOpenApiConfig();
 
 
-        //services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddProblemDetails();
 
         //var stripeKey = configuration["Stripe:SecretKey"];
@@ -53,8 +54,7 @@ public static class DependencyInjection
         //    Stripe.StripeConfiguration.ApiKey = stripeKey;
         //}
 
-        //services.AddHealthChecks()
-        //    .AddSqlServer(name: "database", connectionString: configuration.GetConnectionString("DefaultConnection")!);
+        services.AddHealthChecks();
 
         services.AddRateLimitingConfig();
 

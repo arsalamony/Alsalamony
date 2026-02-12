@@ -95,7 +95,9 @@ app.UseRateLimiter();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseExceptionHandler();
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();

@@ -20,41 +20,34 @@ public class SystemRecordRepository : ISystemRecordRepository
     public bool Add(SystemRecord entity)
     {
         bool isAdded = false;
-        try
+
+        using (SqlCommand command = new SqlCommand("AddSystemRecord", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("AddSystemRecord", connection, transaction))
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@Description", entity.Description);
+            command.Parameters.AddWithValue("@Level", entity.Level);
+            command.Parameters.AddWithValue("@CreatedDate", entity.CreatedDate);
+            command.Parameters.AddWithValue("@Finished", entity.Finished);
+
+            command.Parameters.Add(new SqlParameter("@SystemRecordId", SqlDbType.Int)
             {
-                command.CommandType = CommandType.StoredProcedure;
+                Direction = ParameterDirection.Output,
+            });
 
-                command.Parameters.AddWithValue("@Description", entity.Description);
-                command.Parameters.AddWithValue("@Level", entity.Level);
-                command.Parameters.AddWithValue("@CreatedDate", entity.CreatedDate);
-                command.Parameters.AddWithValue("@Finished", entity.Finished);
+            int rowAffected = command.ExecuteNonQuery();
 
-                command.Parameters.Add(new SqlParameter("@SystemRecordId", SqlDbType.Int)
-                {
-                    Direction = ParameterDirection.Output,
-                });
-
-                int rowAffected = command.ExecuteNonQuery();
-
-                if (rowAffected == 0)  // this means insert failed
-                {
-                    isAdded = false;
-                }
-                else
-                {
-                    isAdded = true;
-                    entity.SystemRecordId = (int)command.Parameters["@SystemRecordId"].Value;
-                }
+            if (rowAffected == 0)  // this means insert failed
+            {
+                isAdded = false;
             }
-
+            else
+            {
+                isAdded = true;
+                entity.SystemRecordId = (int)command.Parameters["@SystemRecordId"].Value;
+            }
         }
-        catch (Exception)
-        {
 
-            throw;
-        }
 
         return isAdded;
     }
@@ -69,38 +62,28 @@ public class SystemRecordRepository : ISystemRecordRepository
         SystemRecord SystemRecord = null;
 
         string query = "Select * from SystemRecords Where SystemRecordId = @SystemRecordId;";
-        try
+
+        using (SqlCommand command = new SqlCommand(query, connection, transaction))
         {
-
-            using (SqlCommand command = new SqlCommand(query, connection, transaction))
+            command.Parameters.AddWithValue("@SystemRecordId", id);
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                command.Parameters.AddWithValue("@SystemRecordId", id);
-                using (SqlDataReader reader = command.ExecuteReader())
+                if (reader.Read())
                 {
-                    if (reader.Read())
+                    // The record was found
+                    SystemRecord = new SystemRecord
                     {
-                        // The record was found
-                        SystemRecord = new SystemRecord
-                        {
-                            SystemRecordId = id,
-                            CreatedDate = (DateTime)reader["CreatedDate"],
-                            Description = (string)reader["Description"],
-                            Finished = (bool)reader["Finished"],
-                            Level = (byte)reader["Level"]
-                        };
-
-                    }
+                        SystemRecordId = id,
+                        CreatedDate = (DateTime)reader["CreatedDate"],
+                        Description = (string)reader["Description"],
+                        Finished = (bool)reader["Finished"],
+                        Level = (byte)reader["Level"]
+                    };
 
                 }
+
             }
-
         }
-        catch (Exception ex)
-        {
-            //Console.WriteLine("Error: " + ex.Message);
-
-        }
-
 
         return SystemRecord;
     }
@@ -109,31 +92,22 @@ public class SystemRecordRepository : ISystemRecordRepository
     {
         List<SystemRecord> rs = new List<SystemRecord>();
 
-        try
+        using (SqlCommand command = new SqlCommand("Select * from SystemRecords Order by SystemRecordId desc;", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("Select * from SystemRecords Order by SystemRecordId desc;", connection, transaction))
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                using (SqlDataReader reader = command.ExecuteReader())
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    rs.Add(new SystemRecord
                     {
-                        rs.Add(new SystemRecord
-                        {
-                            SystemRecordId = reader.GetInt32(reader.GetOrdinal("SystemRecordId")),
-                            CreatedDate = (DateTime)reader["CreatedDate"],
-                            Description = reader.GetString(reader.GetOrdinal("Description")),
-                            Level = (byte)reader["Level"],
-                            Finished = (bool)reader["Finished"]
-                        });
-                    }
+                        SystemRecordId = reader.GetInt32(reader.GetOrdinal("SystemRecordId")),
+                        CreatedDate = (DateTime)reader["CreatedDate"],
+                        Description = reader.GetString(reader.GetOrdinal("Description")),
+                        Level = (byte)reader["Level"],
+                        Finished = (bool)reader["Finished"]
+                    });
                 }
             }
-
-        }
-        catch (Exception)
-        {
-
-            throw;
         }
 
         return rs;
@@ -142,26 +116,18 @@ public class SystemRecordRepository : ISystemRecordRepository
     public bool Update(SystemRecord entity)
     {
         int rowAffected = 0;
-        try
+
+        using (SqlCommand command = new SqlCommand("UpdateSystemRecord", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("UpdateSystemRecord", connection, transaction))
-            {
-                command.CommandType = CommandType.StoredProcedure;
+            command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.AddWithValue("@SystemRecordId", entity.SystemRecordId);
-                command.Parameters.AddWithValue("@Level", entity.Level);
-                command.Parameters.AddWithValue("@Description", entity.Description);
-                command.Parameters.AddWithValue("@Finished", entity.Finished);
-                command.Parameters.AddWithValue("@CreatedDate", entity.CreatedDate);
+            command.Parameters.AddWithValue("@SystemRecordId", entity.SystemRecordId);
+            command.Parameters.AddWithValue("@Level", entity.Level);
+            command.Parameters.AddWithValue("@Description", entity.Description);
+            command.Parameters.AddWithValue("@Finished", entity.Finished);
+            command.Parameters.AddWithValue("@CreatedDate", entity.CreatedDate);
 
-                rowAffected = command.ExecuteNonQuery();
-            }
-
-        }
-        catch (Exception)
-        {
-
-            throw;
+            rowAffected = command.ExecuteNonQuery();
         }
 
         return rowAffected > 0;

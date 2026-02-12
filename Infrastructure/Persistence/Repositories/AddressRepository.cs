@@ -1,10 +1,6 @@
 ﻿using Application.Common.Interfaces.Repositories;
 using Domain.Entities;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Transactions;
 
 namespace Infrastructure.Persistence.Repositories;
 
@@ -32,32 +28,23 @@ public class AddressRepository : IAddressRepository
     {
         Address Address = null;
 
-        try
+        using (SqlCommand command = new SqlCommand("Select * from Addresses where AddressId = @AddressId;", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("Select * from Addresses where AddressId = @AddressId;", connection, transaction))
+            command.Parameters.AddWithValue("@AddressId", id);
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                command.Parameters.AddWithValue("@AddressId", id);
-                using (SqlDataReader reader = command.ExecuteReader())
+                if (reader.Read())
                 {
-                    if (reader.Read())
+                    // The record was found
+                    Address = new Address
                     {
-                        // The record was found
-                        Address = new Address
-                        {
-                            AddressID = id,
-                            AddressName = (string)reader["AddressName"]
-                        };
-
-                    }
+                        AddressID = id,
+                        AddressName = (string)reader["AddressName"]
+                    };
 
                 }
+
             }
-
-        }
-        catch (Exception ex)
-        {
-            //Console.WriteLine("Error: " + ex.Message);
-
         }
 
         return Address;

@@ -21,76 +21,63 @@ public class UserRepository : IUserRepository
     public IEnumerable<User> GetAll()
     {
         List<User> userProducts = new List<User>();
-        try
+
+        using (SqlCommand command = new SqlCommand("GetAllUsers", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("GetAllUsers", connection, transaction))
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                using (SqlDataReader reader = command.ExecuteReader())
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
 
-                        userProducts.Add(new User
-                        {
-                            UserId = Convert.ToInt32(reader["UserId"]),
-                            Name = (string)reader["Name"],
-                            Username = (string)reader["Username"],
-                            Password = (string)reader["Password"],
-                            Role = (string)reader["Role"],
-                            Latitude = reader["Latitude"] as decimal?,
-                            Longitude = reader["Longitude"] as decimal?,
-                            DateOfLastLocation = reader["DateOfLastLocation"] as DateTime?
-                        });
-                    }
+                    userProducts.Add(new User
+                    {
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        Name = (string)reader["Name"],
+                        Username = (string)reader["Username"],
+                        Password = (string)reader["Password"],
+                        Role = (string)reader["Role"],
+                        Latitude = reader["Latitude"] as decimal?,
+                        Longitude = reader["Longitude"] as decimal?,
+                        DateOfLastLocation = reader["DateOfLastLocation"] as DateTime?
+                    });
                 }
             }
-
         }
-        catch (Exception)
-        {
 
-            throw;
-        }
+
         return userProducts;
     }
     public User Find(int userId)
     {
         User user = null;
 
-        try
+        using (SqlCommand command = new SqlCommand("SP_GetUserByUserId", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("SP_GetUserByUserId", connection, transaction))
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@UserId", userId);
+
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@UserId", userId);
-
-                using (SqlDataReader reader = command.ExecuteReader())
+                if (reader.Read())
                 {
-                    if (reader.Read())
-                    {
-                        // The record was found
-                        user = new User();
+                    // The record was found
+                    user = new User();
 
-                        user.UserId = userId;
-                        user.Name = (string)reader["Name"];
-                        user.Username = (string)reader["Username"];
-                        user.Password = (string)reader["Password"];
-                        user.Role = (string)reader["Role"];
-                        user.Latitude = reader["Latitude"] as decimal?;
-                        user.Longitude = reader["Longitude"] as decimal?;
-                        user.DateOfLastLocation = reader["DateOfLastLocation"] as DateTime?;
+                    user.UserId = userId;
+                    user.Name = (string)reader["Name"];
+                    user.Username = (string)reader["Username"];
+                    user.Password = (string)reader["Password"];
+                    user.Role = (string)reader["Role"];
+                    user.Latitude = reader["Latitude"] as decimal?;
+                    user.Longitude = reader["Longitude"] as decimal?;
+                    user.DateOfLastLocation = reader["DateOfLastLocation"] as DateTime?;
 
-                    }
                 }
             }
         }
-        catch (Exception ex)
-        {
-            //Console.WriteLine("Error: " + ex.Message);
 
-        }
 
         return user;
     }
@@ -99,38 +86,28 @@ public class UserRepository : IUserRepository
     {
         User user = null;
 
-        try
+        using (SqlCommand command = new SqlCommand("SP_GetUserByUsername", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("SP_GetUserByUsername", connection, transaction))
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Username", UserName);
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@Username", UserName);
-                using (SqlDataReader reader = command.ExecuteReader())
+                if (reader.Read())
                 {
-                    if (reader.Read())
+                    // The record was found
+                    user = new User
                     {
-                        // The record was found
-                        user = new User
-                        {
-                            UserId = (int)reader["UserId"],
-                            Name = (string)reader["Name"],
-                            Username = UserName,
-                            Password = (string)reader["Password"],
-                            Role = (string)reader["Role"],
-                            Latitude = reader["Latitude"] as decimal?,
-                            Longitude = reader["Longitude"] as decimal?,
-                            DateOfLastLocation = reader["DateOfLastLocation"] as DateTime?
-                        };
-
-                    }
-
+                        UserId = (int)reader["UserId"],
+                        Name = (string)reader["Name"],
+                        Username = UserName,
+                        Password = (string)reader["Password"],
+                        Role = (string)reader["Role"],
+                        Latitude = reader["Latitude"] as decimal?,
+                        Longitude = reader["Longitude"] as decimal?,
+                        DateOfLastLocation = reader["DateOfLastLocation"] as DateTime?
+                    };
                 }
-
             }
-        }
-        catch (Exception ex)
-        {
-            //Console.WriteLine("Error: " + ex.Message);
         }
         return user;
     }
@@ -138,49 +115,41 @@ public class UserRepository : IUserRepository
     public bool Add(User entity)
     {
         bool isAdded = false;
-        try
+
+        using (SqlCommand command = new SqlCommand("AddUser", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("AddUser", connection, transaction))
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@Name", entity.Name);
+            command.Parameters.AddWithValue("@Username", entity.Username);
+            command.Parameters.AddWithValue("@Password", entity.Password);
+            command.Parameters.AddWithValue("@Role", entity.Role);
+
+            var lat = command.Parameters.Add("@Latitude", SqlDbType.Decimal);
+            lat.Precision = 9; lat.Scale = 6;
+            lat.Value = (object?)entity.Latitude ?? DBNull.Value;
+
+            var lon = command.Parameters.Add("@Longitude", SqlDbType.Decimal);
+            lon.Precision = 9; lon.Scale = 6;
+            lon.Value = (object?)entity.Longitude ?? DBNull.Value;
+
+            command.Parameters.AddWithValue("@DateOfLastLocation", (object?)entity.DateOfLastLocation ?? DBNull.Value);
+            command.Parameters.Add(new SqlParameter("@UserId", SqlDbType.Int)
             {
-                command.CommandType = CommandType.StoredProcedure;
+                Direction = ParameterDirection.Output,
+            });
 
-                command.Parameters.AddWithValue("@Name", entity.Name);
-                command.Parameters.AddWithValue("@Username", entity.Username);
-                command.Parameters.AddWithValue("@Password", entity.Password);
-                command.Parameters.AddWithValue("@Role", entity.Role);
+            int rowAffected = command.ExecuteNonQuery();
 
-                var lat = command.Parameters.Add("@Latitude", SqlDbType.Decimal);
-                lat.Precision = 9; lat.Scale = 6;
-                lat.Value = (object?)entity.Latitude ?? DBNull.Value;
-
-                var lon = command.Parameters.Add("@Longitude", SqlDbType.Decimal);
-                lon.Precision = 9; lon.Scale = 6;
-                lon.Value = (object?)entity.Longitude ?? DBNull.Value;
-
-                command.Parameters.AddWithValue("@DateOfLastLocation", (object?)entity.DateOfLastLocation ?? DBNull.Value);
-                command.Parameters.Add(new SqlParameter("@UserId", SqlDbType.Int)
-                {
-                    Direction = ParameterDirection.Output,
-                });
-
-                int rowAffected = command.ExecuteNonQuery();
-
-                if (rowAffected == 0)  // this means insert failed
-                {
-                    isAdded = false;
-                }
-                else
-                {
-                    isAdded = true;
-                    entity.UserId = (int)command.Parameters["@UserId"].Value;
-                }
+            if (rowAffected == 0)  // this means insert failed
+            {
+                isAdded = false;
             }
-
-        }
-        catch (Exception)
-        {
-
-            throw;
+            else
+            {
+                isAdded = true;
+                entity.UserId = (int)command.Parameters["@UserId"].Value;
+            }
         }
 
         return isAdded;
@@ -188,29 +157,21 @@ public class UserRepository : IUserRepository
     public bool Update(User entity)
     {
         int rowAffected = 0;
-        try
+
+        using (SqlCommand command = new SqlCommand("SP_UpdateUser", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("SP_UpdateUser", connection, transaction))
-            {
-                command.CommandType = CommandType.StoredProcedure;
+            command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.AddWithValue("@UserId", entity.UserId);
-                command.Parameters.AddWithValue("@Name", entity.Name);
-                command.Parameters.AddWithValue("@Username", entity.Username);
-                command.Parameters.AddWithValue("@Password", entity.Password);
-                command.Parameters.AddWithValue("@Role", entity.Role);
-                command.Parameters.AddWithValue("@Latitude", (object?)entity.Latitude ?? DBNull.Value);
-                command.Parameters.AddWithValue("@Longitude", (object?)entity.Longitude ?? DBNull.Value);
-                command.Parameters.AddWithValue("@DateOfLastLocation", (object?)entity.DateOfLastLocation ?? DBNull.Value);
+            command.Parameters.AddWithValue("@UserId", entity.UserId);
+            command.Parameters.AddWithValue("@Name", entity.Name);
+            command.Parameters.AddWithValue("@Username", entity.Username);
+            command.Parameters.AddWithValue("@Password", entity.Password);
+            command.Parameters.AddWithValue("@Role", entity.Role);
+            command.Parameters.AddWithValue("@Latitude", (object?)entity.Latitude ?? DBNull.Value);
+            command.Parameters.AddWithValue("@Longitude", (object?)entity.Longitude ?? DBNull.Value);
+            command.Parameters.AddWithValue("@DateOfLastLocation", (object?)entity.DateOfLastLocation ?? DBNull.Value);
 
-                rowAffected = command.ExecuteNonQuery();
-            }
-
-        }
-        catch (Exception)
-        {
-
-            throw;
+            rowAffected = command.ExecuteNonQuery();
         }
 
         return rowAffected > 0;
@@ -219,27 +180,18 @@ public class UserRepository : IUserRepository
     public bool Delete(int Id)
     {
         int rowAffected = 0;
-        try
+
+        using (SqlCommand command = new SqlCommand("SP_DeleteUser", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("SP_DeleteUser", connection, transaction))
-            {
-                command.CommandType = CommandType.StoredProcedure;
+            command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.AddWithValue("@UserId", Id);
+            command.Parameters.AddWithValue("@UserId", Id);
 
 
-                rowAffected = command.ExecuteNonQuery();
-            }
-
-        }
-        catch (Exception)
-        {
-
-            throw;
+            rowAffected = command.ExecuteNonQuery();
         }
 
         return rowAffected > 0;
     }
-
 
 }

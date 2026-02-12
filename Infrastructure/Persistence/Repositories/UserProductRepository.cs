@@ -19,109 +19,88 @@ public class UserProductRepository : IUserProductRepository
     public UserProduct Find(int UserProductId)
     {
         UserProduct userProduct = null;
-        try
+
+        using (SqlCommand command = new SqlCommand("SP_GetUserProductByUserProductId", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("SP_GetUserProductByUserProductId", connection, transaction))
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@UserProductId", UserProductId);
+
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@UserProductId", UserProductId);
-
-                using (SqlDataReader reader = command.ExecuteReader())
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
 
-                        userProduct = new UserProduct
-                        {
-                            ProductId = Convert.ToInt32(reader["ProductId"]),
-                            Qty = Convert.ToInt32(reader["Qty"]),
-                            UserProductId = UserProductId,
-                            UserId = Convert.ToInt32(reader["UserId"])
-                        };
-                    }
+                    userProduct = new UserProduct
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        Qty = Convert.ToInt32(reader["Qty"]),
+                        UserProductId = UserProductId,
+                        UserId = Convert.ToInt32(reader["UserId"])
+                    };
                 }
             }
-
         }
-        catch (Exception)
-        {
 
-            throw;
-        }
         return userProduct;
     }
 
     public ICollection<UserProduct> GetAll(int UserId)
     {
         List<UserProduct> userProducts = new List<UserProduct>();
-        try
+
+        using (SqlCommand command = new SqlCommand("SP_GetAllUserProducts", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("SP_GetAllUserProducts", connection, transaction))
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@UserId", UserId);
+
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                command.Parameters.AddWithValue("@UserId", UserId);
-
-                using (SqlDataReader reader = command.ExecuteReader())
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
 
-                        userProducts.Add(new UserProduct
-                        {
-                            ProductId = Convert.ToInt32(reader["ProductId"]),
-                            Qty = Convert.ToInt32(reader["Qty"]),
-                            UserProductId = Convert.ToInt32(reader["UserProductId"]),
-                            UserId = UserId
-                        });
-                    }
+                    userProducts.Add(new UserProduct
+                    {
+                        ProductId = Convert.ToInt32(reader["ProductId"]),
+                        Qty = Convert.ToInt32(reader["Qty"]),
+                        UserProductId = Convert.ToInt32(reader["UserProductId"]),
+                        UserId = UserId
+                    });
                 }
             }
-
         }
-        catch (Exception)
-        {
 
-            throw;
-        }
+
         return userProducts;
     }
 
     public bool Add(UserProduct entity)
     {
         bool isAdded = false;
-        try
+
+        using (SqlCommand command = new SqlCommand("SP_AddUserProduct", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("SP_AddUserProduct", connection, transaction))
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@ProductId", entity.ProductId);
+            command.Parameters.AddWithValue("@UserId", entity.UserId);
+            command.Parameters.AddWithValue("@Qty", entity.Qty);
+            command.Parameters.Add(new SqlParameter("@UserProductId", SqlDbType.Int)
             {
-                command.CommandType = CommandType.StoredProcedure;
+                Direction = ParameterDirection.Output,
+            });
 
-                command.Parameters.AddWithValue("@ProductId", entity.ProductId);
-                command.Parameters.AddWithValue("@UserId", entity.UserId);
-                command.Parameters.AddWithValue("@Qty", entity.Qty);
-                command.Parameters.Add(new SqlParameter("@UserProductId", SqlDbType.Int)
-                {
-                    Direction = ParameterDirection.Output,
-                });
+            int rowAffected = command.ExecuteNonQuery();
 
-                int rowAffected = command.ExecuteNonQuery();
-
-                if (rowAffected == 0)  // this means insert failed
-                {
-                    isAdded = false;
-                }
-                else
-                {
-                    isAdded = true;
-                    entity.UserProductId = (int)command.Parameters["@UserProductId"].Value;
-                }
+            if (rowAffected == 0)  // this means insert failed
+            {
+                isAdded = false;
             }
-
-        }
-        catch (Exception)
-        {
-
-            throw;
+            else
+            {
+                isAdded = true;
+                entity.UserProductId = (int)command.Parameters["@UserProductId"].Value;
+            }
         }
 
         return isAdded;
@@ -136,24 +115,19 @@ public class UserProductRepository : IUserProductRepository
     public bool Update(UserProduct userProduct)
     {
         int rowsAffected = 0;
-        try
-        {
-            using (SqlCommand command = new SqlCommand("SP_UpdateUserProduct", connection, transaction))
-            {
-                command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                command.Parameters.AddWithValue("@UserProductId", userProduct.UserProductId);
-                command.Parameters.AddWithValue("@ProductId", userProduct.ProductId);
-                command.Parameters.AddWithValue("@UserId", userProduct.UserId);
-                command.Parameters.AddWithValue("@Qty", userProduct.Qty);
-
-                rowsAffected = command.ExecuteNonQuery();
-            }
-        }
-        catch (Exception)
+        using (SqlCommand command = new SqlCommand("SP_UpdateUserProduct", connection, transaction))
         {
-            throw;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@UserProductId", userProduct.UserProductId);
+            command.Parameters.AddWithValue("@ProductId", userProduct.ProductId);
+            command.Parameters.AddWithValue("@UserId", userProduct.UserId);
+            command.Parameters.AddWithValue("@Qty", userProduct.Qty);
+
+            rowsAffected = command.ExecuteNonQuery();
         }
+
         return rowsAffected > 0;
     }
 

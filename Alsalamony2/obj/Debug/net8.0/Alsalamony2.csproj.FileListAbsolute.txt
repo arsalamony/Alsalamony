@@ -88,3 +88,4 @@ C:\Users\Abdallah\source\repos\Alsalamony2\Alsalamony2\obj\Debug\net8.0\Alsalamo
 C:\Users\Abdallah\source\repos\Alsalamony2\Alsalamony2\obj\Debug\net8.0\Alsalamony2.genruntimeconfig.cache
 C:\Users\Abdallah\source\repos\Alsalamony2\Alsalamony2\obj\Debug\net8.0\ref\Alsalamony2.dll
 C:\Users\Abdallah\source\repos\Alsalamony2\Alsalamony2\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Abdallah\source\repos\Alsalamony2\Alsalamony2\obj\Debug\net8.0\Alsalamony2.sourcelink.json

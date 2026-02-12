@@ -18,41 +18,33 @@ public class InvoiceItemRepository : IGenericRepository<InvoiceItem>, IInvoiceIt
     public bool Add(InvoiceItem entity)
     {
         bool isAdded = false;
-        try
+
+        using (SqlCommand command = new SqlCommand("SP_AddInvoiceItem", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("SP_AddInvoiceItem", connection, transaction))
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@InvoiceId", entity.InvoiceId);
+            command.Parameters.AddWithValue("@ProductId", entity.ProductId);
+            command.Parameters.AddWithValue("@Qty", entity.Qty);
+            command.Parameters.AddWithValue("@PricePerUnit", entity.PricePerUnit);
+            command.Parameters.AddWithValue("@IsGift", entity.IsGift);
+
+            command.Parameters.Add(new SqlParameter("@InvoiceItemId", SqlDbType.Int)
             {
-                command.CommandType = CommandType.StoredProcedure;
+                Direction = ParameterDirection.Output,
+            });
 
-                command.Parameters.AddWithValue("@InvoiceId", entity.InvoiceId);
-                command.Parameters.AddWithValue("@ProductId", entity.ProductId);
-                command.Parameters.AddWithValue("@Qty", entity.Qty);
-                command.Parameters.AddWithValue("@PricePerUnit", entity.PricePerUnit);
-                command.Parameters.AddWithValue("@IsGift", entity.IsGift);
+            int rowAffected = command.ExecuteNonQuery();
 
-                command.Parameters.Add(new SqlParameter("@InvoiceItemId", SqlDbType.Int)
-                {
-                    Direction = ParameterDirection.Output,
-                });
-
-                int rowAffected = command.ExecuteNonQuery();
-
-                if (rowAffected == 0)  // this means insert failed
-                {
-                    isAdded = false;
-                }
-                else
-                {
-                    isAdded = true;
-                    entity.InvoiceItemId = (int)command.Parameters["@InvoiceItemId"].Value;
-                }
+            if (rowAffected == 0)  // this means insert failed
+            {
+                isAdded = false;
             }
-
-        }
-        catch (Exception)
-        {
-
-            throw;
+            else
+            {
+                isAdded = true;
+                entity.InvoiceItemId = (int)command.Parameters["@InvoiceItemId"].Value;
+            }
         }
 
         return isAdded;
@@ -112,65 +104,50 @@ public class InvoiceItemRepository : IGenericRepository<InvoiceItem>, IInvoiceIt
     public ICollection<InvoiceItem> GetInvoiceItems(int InvoiceId)
     {
         List<InvoiceItem> InvoiceItems = new List<InvoiceItem>();
-        try
+
+        using (SqlCommand command = new SqlCommand("SP_GetAllInvoiceItems", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("SP_GetAllInvoiceItems", connection, transaction))
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@InvoiceId", InvoiceId);
+
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                command.Parameters.AddWithValue("@InvoiceId", InvoiceId);
-
-                using (SqlDataReader reader = command.ExecuteReader())
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
 
-                        InvoiceItems.Add(new InvoiceItem
-                        {
-                            InvoiceItemId = reader.GetInt32(reader.GetOrdinal("InvoiceItemId")),
-                            InvoiceId = InvoiceId,
-                            ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
-                            Qty = reader.GetInt32(reader.GetOrdinal("Qty")),
-                            PricePerUnit = reader.GetDecimal(reader.GetOrdinal("PricePerUnit")),
-                            IsGift = reader.GetBoolean(reader.GetOrdinal("IsGift"))
-                        });
-                    }
+                    InvoiceItems.Add(new InvoiceItem
+                    {
+                        InvoiceItemId = reader.GetInt32(reader.GetOrdinal("InvoiceItemId")),
+                        InvoiceId = InvoiceId,
+                        ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
+                        Qty = reader.GetInt32(reader.GetOrdinal("Qty")),
+                        PricePerUnit = reader.GetDecimal(reader.GetOrdinal("PricePerUnit")),
+                        IsGift = reader.GetBoolean(reader.GetOrdinal("IsGift"))
+                    });
                 }
             }
-
         }
-        catch (Exception)
-        {
 
-            throw;
-        }
         return InvoiceItems;
     }
 
     public bool Update(InvoiceItem entity)
     {
         int rowAffected = 0;
-        try
+
+        using (SqlCommand command = new SqlCommand("UpdateInvoiceItem", connection, transaction))
         {
-            using (SqlCommand command = new SqlCommand("UpdateInvoiceItem", connection, transaction))
-            {
-                command.CommandType = CommandType.StoredProcedure;
+            command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.AddWithValue("@InvoiceItemId", entity.InvoiceItemId);
-                command.Parameters.AddWithValue("@InvoiceId", entity.InvoiceId);
-                command.Parameters.AddWithValue("@ProductId", entity.ProductId);
-                command.Parameters.AddWithValue("@Qty", entity.Qty);
-                command.Parameters.AddWithValue("@PricePerUnit", entity.PricePerUnit);
-                command.Parameters.AddWithValue("@IsGift", entity.IsGift);
+            command.Parameters.AddWithValue("@InvoiceItemId", entity.InvoiceItemId);
+            command.Parameters.AddWithValue("@InvoiceId", entity.InvoiceId);
+            command.Parameters.AddWithValue("@ProductId", entity.ProductId);
+            command.Parameters.AddWithValue("@Qty", entity.Qty);
+            command.Parameters.AddWithValue("@PricePerUnit", entity.PricePerUnit);
+            command.Parameters.AddWithValue("@IsGift", entity.IsGift);
 
-                rowAffected = command.ExecuteNonQuery();
-            }
-
-        }
-        catch (Exception)
-        {
-
-            throw;
+            rowAffected = command.ExecuteNonQuery();
         }
 
         return rowAffected > 0;
