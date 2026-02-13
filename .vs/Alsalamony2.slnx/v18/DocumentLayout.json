@@ -11,19 +11,20 @@
       "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Abdallah\\AppData\\Roaming\\Microsoft\\UserSecrets\\03cf8ece-ee08-47bd-82f3-556eb3e0aefb\\secrets.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\controllers\\customercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\controllers\\customercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\alsalamony2.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
@@ -58,14 +59,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "secrets.json",
-              "DocumentMoniker": "C:\\Users\\Abdallah\\AppData\\Roaming\\Microsoft\\UserSecrets\\03cf8ece-ee08-47bd-82f3-556eb3e0aefb\\secrets.json",
-              "RelativeDocumentMoniker": "..\\..\\..\\AppData\\Roaming\\Microsoft\\UserSecrets\\03cf8ece-ee08-47bd-82f3-556eb3e0aefb\\secrets.json",
-              "ToolTip": "C:\\Users\\Abdallah\\AppData\\Roaming\\Microsoft\\UserSecrets\\03cf8ece-ee08-47bd-82f3-556eb3e0aefb\\secrets.json",
-              "RelativeToolTip": "..\\..\\..\\AppData\\Roaming\\Microsoft\\UserSecrets\\03cf8ece-ee08-47bd-82f3-556eb3e0aefb\\secrets.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-02-13T06:43:18.736Z",
+              "Title": "CustomerController.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\CustomerController.cs",
+              "RelativeDocumentMoniker": "Alsalamony2\\Controllers\\CustomerController.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\CustomerController.cs",
+              "RelativeToolTip": "Alsalamony2\\Controllers\\CustomerController.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAqwB4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-13T09:22:15.38Z",
               "EditorCaption": ""
             },
             {
@@ -76,13 +77,14 @@
               "RelativeDocumentMoniker": "Alsalamony2\\Controllers\\AuthController.cs",
               "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\AuthController.cs",
               "RelativeToolTip": "Alsalamony2\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACEAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-13T05:32:48.004Z"
+              "WhenOpened": "2026-02-13T05:32:48.004Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\appsettings.Development.json",
               "RelativeDocumentMoniker": "Alsalamony2\\appsettings.Development.json",
@@ -106,7 +108,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\appsettings.json",
               "RelativeDocumentMoniker": "Alsalamony2\\appsettings.json",
@@ -124,7 +126,7 @@
               "RelativeDocumentMoniker": "Alsalamony2\\Program.cs",
               "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Program.cs",
               "RelativeToolTip": "Alsalamony2\\Program.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAGMAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-12T12:09:28.913Z",
               "EditorCaption": ""
@@ -137,7 +139,7 @@
               "RelativeDocumentMoniker": "Alsalamony2\\DependencyInjection.cs",
               "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\DependencyInjection.cs",
               "RelativeToolTip": "Alsalamony2\\DependencyInjection.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABYAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAkwFYAAABdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-12T12:09:18.216Z",
               "EditorCaption": ""

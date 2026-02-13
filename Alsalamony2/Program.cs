@@ -95,17 +95,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseSerilogRequestLogging();
 
+app.UseExceptionHandler();
+
 app.UseHttpsRedirection();
 
 app.UseCors("AlsalamonyCorsPolicy");
-
-app.UseRateLimiter();
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.UseExceptionHandler();
+app.UseRateLimiter();
 
 app.MapControllers();
 

@@ -93,7 +93,7 @@ public static class DependencyInjection
             rateLimiterOptions.AddPolicy(RateLimiters.IpLimiter, httpContext =>
                 RateLimitPartition.GetFixedWindowLimiter(
 
-                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
+                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown-ip",
                     factory: _ => new FixedWindowRateLimiterOptions
                     {
                         PermitLimit = 5,

@@ -117,3 +117,4 @@ C:\Users\Abdallah\source\repos\Alsalamony2\Alsalamony2\bin\Debug\net8.0\System.I
 C:\Users\Abdallah\source\repos\Alsalamony2\Alsalamony2\bin\Debug\net8.0\System.Text.Encodings.Web.dll
 C:\Users\Abdallah\source\repos\Alsalamony2\Alsalamony2\bin\Debug\net8.0\System.Text.Json.dll
 C:\Users\Abdallah\source\repos\Alsalamony2\Alsalamony2\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+C:\Users\Abdallah\source\repos\Alsalamony2\Alsalamony2\bin\Debug\net8.0\appsettings.Production.json
