@@ -104,10 +104,12 @@ app.UseCors("AlsalamonyCorsPolicy");
 app.UseAuthentication();
 
 app.UseAuthorization();
+app.UseForwardedHeaders();
 
 app.UseRateLimiter();
 
 app.MapControllers();
+
 
 app.MapHealthChecks("/health", new HealthCheckOptions
 {

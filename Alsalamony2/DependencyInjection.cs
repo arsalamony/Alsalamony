@@ -4,6 +4,7 @@ using Alsalamony.Infrastructure.Authentication;
 using Alsalamony.Utilities;
 using Alsalamony2.Errors;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
@@ -24,11 +25,9 @@ public static class DependencyInjection
             options.AddPolicy("AlsalamonyCorsPolicy", policy =>
             {
                 policy
-                    .WithOrigins(
-                        "https://localhost:7134",
-                        "http://localhost:5225",
-                        "http://localhost:5173",
-                        "https://localhost:5173")
+                    .WithOrigins(configuration
+                        .GetSection("Cors:AllowedOrigins")
+                        .Get<string[]>() ?? Array.Empty<string>())
                     .AllowAnyHeader()
                     .AllowAnyMethod();
             });
@@ -86,6 +85,14 @@ public static class DependencyInjection
 
     private static IServiceCollection AddRateLimitingConfig(this IServiceCollection services)
     {
+        services.Configure<ForwardedHeadersOptions>(options =>
+        {
+            options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            options.KnownNetworks.Clear();
+            options.KnownProxies.Clear();
+        });
+
+
         services.AddRateLimiter(rateLimiterOptions =>
         {
             rateLimiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -96,7 +103,7 @@ public static class DependencyInjection
                     partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown-ip",
                     factory: _ => new FixedWindowRateLimiterOptions
                     {
-                        PermitLimit = 5,
+                        PermitLimit = 30,
                         Window = TimeSpan.FromSeconds(20)
                     }
                 )
@@ -108,7 +115,7 @@ public static class DependencyInjection
                     partitionKey: httpContext.User.GetUserId(),
                     factory: _ => new FixedWindowRateLimiterOptions
                     {
-                        PermitLimit = 5,
+                        PermitLimit = 30,
                         Window = TimeSpan.FromSeconds(20)
                     }
                 )
