@@ -19,8 +19,6 @@ public static class DependencyInjection
     {
         services.AddControllers();
 
-        //services.AddHybridCache();
-
         services.AddCors(options =>
         {
             options.AddPolicy("AlsalamonyCorsPolicy", policy =>
@@ -42,42 +40,15 @@ public static class DependencyInjection
             ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 
-        services.AddOpenApiConfig();
-
 
         services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddProblemDetails();
 
-        //var stripeKey = configuration["Stripe:SecretKey"];
-        //if (!string.IsNullOrWhiteSpace(stripeKey))
-        //{
-        //    Stripe.StripeConfiguration.ApiKey = stripeKey;
-        //}
-
-        services.AddHealthChecks();
+        services.AddHealthChecks()
+                .AddSqlServer(name: "database", connectionString: configuration.GetConnectionString("DefaultConnection")!); ;
 
         services.AddRateLimitingConfig();
 
-        //services.AddApiVersioning(options =>
-        //{
-        //    options.DefaultApiVersion = new ApiVersion(1);
-        //    options.AssumeDefaultVersionWhenUnspecified = true;
-        //    options.ReportApiVersions = true;
-        //    options.ApiVersionReader = new HeaderApiVersionReader("x-api-version");
-        //})
-        //.AddApiExplorer(options =>
-        //{
-        //    options.GroupNameFormat = "'v'V";
-        //    options.SubstituteApiVersionInUrl = true;
-        //});
-
-
-        return services;
-    }
-
-    private static IServiceCollection AddOpenApiConfig(this IServiceCollection services)
-    {
-        //services.AddOpenApi();
         return services;
     }
 

@@ -1,0 +1,20 @@
+# Secrets / env
+.env
+.env.*
+secrets.json
+
+# .NET user-secrets (لو موجود)
+**/secrets.json
+
+# ASP.NET Core appsettings (لو بتخزن فيها أسرار محليًا)
+appsettings.Development.json
+appsettings.Production.json
+
+# Certificates / keys
+*.pfx
+*.pem
+*.key
+
+# Logs
+Logs/
+*.log
