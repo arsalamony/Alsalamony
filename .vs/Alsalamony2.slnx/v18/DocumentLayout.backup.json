@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -30,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,7 +54,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Alsalamony2\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Alsalamony2\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-02-13T16:43:21.016Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "CustomerController.cs",
               "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\CustomerController.cs",
               "RelativeDocumentMoniker": "Alsalamony2\\Controllers\\CustomerController.cs",
@@ -58,12 +75,11 @@
               "RelativeToolTip": "Alsalamony2\\Controllers\\CustomerController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-13T09:22:15.38Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-13T09:22:15.38Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Alsalamony2\\Controllers\\AuthController.cs",
@@ -71,12 +87,11 @@
               "RelativeToolTip": "Alsalamony2\\Controllers\\AuthController.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAqwBYAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-13T05:32:48.004Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-13T05:32:48.004Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Alsalamony2.csproj",
               "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Alsalamony2.csproj",
               "RelativeDocumentMoniker": "Alsalamony2\\Alsalamony2.csproj",
@@ -88,16 +103,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "DependencyInjection.cs",
               "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\DependencyInjection.cs",
               "RelativeDocumentMoniker": "Alsalamony2\\DependencyInjection.cs",
-              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\DependencyInjection.cs*",
-              "RelativeToolTip": "Alsalamony2\\DependencyInjection.cs*",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\DependencyInjection.cs",
+              "RelativeToolTip": "Alsalamony2\\DependencyInjection.cs",
               "ViewState": "AgIAAEAAAAAAAAAAAAAowFcAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T12:09:18.216Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-12T12:09:18.216Z"
             },
             {
               "$type": "Document",
@@ -107,7 +121,7 @@
               "RelativeDocumentMoniker": "Alsalamony2\\Program.cs",
               "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Program.cs*",
               "RelativeToolTip": "Alsalamony2\\Program.cs*",
-              "ViewState": "AgIAAFUAAAAAAAAAAAAAAGsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwGMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-12T12:09:28.913Z",
               "EditorCaption": ""
