@@ -130,6 +130,8 @@ public class UserServices : IUserServices
         user.Longitude = request.Longitude;
         user.DateOfLastLocation = DateTime.Now;
 
+        unitOfWork.UserRepository.Update(user);
+        unitOfWork.Commit();
         return Result.Success();
     }
 }

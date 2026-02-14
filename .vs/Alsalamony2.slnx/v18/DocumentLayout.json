@@ -3,6 +3,34 @@
   "WorkspaceRootPath": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5872AEB3-BAA3-FE31-B0EB-0FB6DBEDCF83}|Infrastructure\\Infrastructure.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\infrastructure\\persistence\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5872AEB3-BAA3-FE31-B0EB-0FB6DBEDCF83}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\application\\services\\user\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\services\\user\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\application\\services\\product\\productservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\services\\product\\productservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\controllers\\customercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\controllers\\customercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\controllers\\systemrecordcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\controllers\\systemrecordcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -30,7 +58,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,7 +78,95 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Infrastructure\\Persistence\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Repositories\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Infrastructure\\Persistence\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\Repositories\\UserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-14T15:51:57.784Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProductServices.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Services\\Product\\ProductServices.cs",
+              "RelativeDocumentMoniker": "Application\\Services\\Product\\ProductServices.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Services\\Product\\ProductServices.cs",
+              "RelativeToolTip": "Application\\Services\\Product\\ProductServices.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-14T15:32:14.183Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "Alsalamony2\\Controllers\\ProductController.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\ProductController.cs",
+              "RelativeToolTip": "Alsalamony2\\Controllers\\ProductController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACEAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-14T15:32:04.08Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CustomerController.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\CustomerController.cs",
+              "RelativeDocumentMoniker": "Alsalamony2\\Controllers\\CustomerController.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\CustomerController.cs",
+              "RelativeToolTip": "Alsalamony2\\Controllers\\CustomerController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAwAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-14T15:11:26.504Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Alsalamony2\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Alsalamony2\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABwAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-14T14:34:19.43Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "Alsalamony2\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\UserController.cs",
+              "RelativeToolTip": "Alsalamony2\\Controllers\\UserController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-14T14:34:01.179Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserServices.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Services\\User\\UserServices.cs",
+              "RelativeDocumentMoniker": "Application\\Services\\User\\UserServices.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Services\\User\\UserServices.cs",
+              "RelativeToolTip": "Application\\Services\\User\\UserServices.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAHoAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-14T14:31:00.625Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "SystemRecordRepository.cs",
               "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Infrastructure\\Persistence\\Repositories\\SystemRecordRepository.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Repositories\\SystemRecordRepository.cs",
@@ -63,7 +179,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 10,
               "Title": "ISystemRecordServices.cs",
               "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Services\\SystemRecord\\ISystemRecordServices.cs",
               "RelativeDocumentMoniker": "Application\\Services\\SystemRecord\\ISystemRecordServices.cs",
@@ -71,12 +187,11 @@
               "RelativeToolTip": "Application\\Services\\SystemRecord\\ISystemRecordServices.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-14T12:32:03.977Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-14T12:32:03.977Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 8,
               "Title": "SystemRecordServices.cs",
               "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Services\\SystemRecord\\SystemRecordServices.cs",
               "RelativeDocumentMoniker": "Application\\Services\\SystemRecord\\SystemRecordServices.cs",
@@ -84,12 +199,11 @@
               "RelativeToolTip": "Application\\Services\\SystemRecord\\SystemRecordServices.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAgwBoAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-14T12:30:52.602Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-14T12:30:52.602Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 7,
               "Title": "SystemRecordController.cs",
               "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\SystemRecordController.cs",
               "RelativeDocumentMoniker": "Alsalamony2\\Controllers\\SystemRecordController.cs",
@@ -97,12 +211,11 @@
               "RelativeToolTip": "Alsalamony2\\Controllers\\SystemRecordController.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABoAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-14T12:28:08.579Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-14T12:28:08.579Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 11,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Program.cs",
               "RelativeDocumentMoniker": "Alsalamony2\\Program.cs",
@@ -110,8 +223,7 @@
               "RelativeToolTip": "Alsalamony2\\Program.cs",
               "ViewState": "AgIAAAEAAAAAAAAAAAAiwGMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T12:09:28.913Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-12T12:09:28.913Z"
             }
           ]
         }
