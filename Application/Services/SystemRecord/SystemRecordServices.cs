@@ -27,6 +27,7 @@ public class SystemRecordServices : ISystemRecordServices
         if (!unitOfWork.SystemRecordRepository.Update(sr))
             return Result.Failure(SystemRecordErrors.SystemRecordUpdateFailed);
 
+        unitOfWork.Commit();
         return Result.Success();
     }
 
