@@ -290,5 +290,24 @@ public class InvoiceServices : IInvoiceServices
 
     }
 
+    /// <summary>
+    /// Delete Invoice With Payments, This Effect On Reports, Be Carefull
+    /// </summary>
+    /// <param name="InvoiceId"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public Result FullDelete(int InvoiceId)
+    {
+        var invoice = unitOfWork.InvoiceRepository.Find(InvoiceId);
 
+        var inPayments = unitOfWork.PaymentRepository.GetAll(InvoiceId);
+
+        foreach (var item in inPayments)
+            if(!unitOfWork.PaymentRepository.Delete(InvoiceId))
+                unitOfWork.Rollback();
+        
+        unitOfWork.InvoiceRepository.Delete(InvoiceId);
+        unitOfWork.Commit();
+        return Result.Success();
+    }
 }

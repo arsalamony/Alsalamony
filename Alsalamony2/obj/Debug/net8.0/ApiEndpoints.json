@@ -138,6 +138,22 @@
   },
   {
     "ContainingType": "Alsalamony.Controllers.InvoiceController",
+    "Method": "FullDelete",
+    "RelativePath": "Invoice/FullDelete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alsalamony.Controllers.InvoiceController",
     "Method": "GetInvoice",
     "RelativePath": "Invoice/Get/{invoiceId}",
     "HttpMethod": "GET",

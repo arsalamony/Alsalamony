@@ -127,6 +127,40 @@ public class PaymentRepository : IGenericRepository<Payment>, IPaymentRepository
         return Payments;
     }
 
+    public IEnumerable<Payment> GetAll(int InvoiceId)
+    {
+        List<Payment> Payments = new List<Payment>();
+
+        using (SqlCommand command = new SqlCommand("GetAllPaymentsByInvoiceId", connection, transaction))
+        {
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@InvoiceId", InvoiceId);
+
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+
+                    Payments.Add(new Payment
+                    {
+                        PaymentId = (int)reader["PaymentId"],
+                        InvoiceId = InvoiceId,
+                        Amount = (decimal)reader["Amount"],
+                        PaymentDate = (DateTime)reader["PaymentDate"],
+                        PaymentMethod = (Domain.Enums.enPaymentMethod)(byte)reader["PaymentMethod"],
+                        CreatedByUserId = (int)reader["CreatedByUserId"],
+                        Added = (bool)reader["Added"],
+                        Finshed = (bool)reader["Finshed"],
+                        Notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? null : reader.GetString(reader.GetOrdinal("Notes"))
+                    });
+                }
+            }
+        }
+
+        return Payments;
+    }
+
     public bool Update(Payment entity)
     {
         int rowAffected = 0;

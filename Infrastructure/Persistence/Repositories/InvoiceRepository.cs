@@ -55,7 +55,19 @@ public class InvoiceRepository : IGenericRepository<Invoice>, IInvoiceRepository
 
     public bool Delete(int id)
     {
-        throw new NotImplementedException();
+        int rowAffected = 0;
+
+        using (SqlCommand command = new SqlCommand("SP_DeleteInvoice", connection, transaction))
+        {
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@InvoiceId", id);
+
+
+            rowAffected = command.ExecuteNonQuery();
+        }
+
+        return rowAffected > 0;
     }
 
     public Invoice Find(int id)

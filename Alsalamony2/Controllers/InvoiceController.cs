@@ -55,4 +55,14 @@ public class InvoiceController : ControllerBase
         return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("FullDelete/{id}")]
+
+    public IActionResult FullDelete(int id) 
+    {
+        var re = invoiceServices.FullDelete(id);
+        return re.IsSuccess? NoContent() : re.ToProblem();
+    }
+
+
 }

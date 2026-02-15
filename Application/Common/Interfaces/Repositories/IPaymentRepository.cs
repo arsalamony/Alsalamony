@@ -10,4 +10,6 @@ public interface IPaymentRepository : IGenericRepository<Payment>
 {
     IEnumerable<Payment> GetAll();
 
+    IEnumerable<Payment> GetAll(int InvoiceId);
+
 }

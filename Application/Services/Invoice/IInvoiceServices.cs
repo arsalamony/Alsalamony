@@ -13,5 +13,5 @@ public interface IInvoiceServices
 
     Result InvoicePayment(int UserId, AddInvoicePaymentRequest request);
 
-    
+    Result FullDelete(int InvoiceId);
 }
