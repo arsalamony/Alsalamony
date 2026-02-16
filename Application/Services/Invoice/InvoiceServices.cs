@@ -303,7 +303,7 @@ public class InvoiceServices : IInvoiceServices
         var inPayments = unitOfWork.PaymentRepository.GetAll(InvoiceId);
 
         foreach (var item in inPayments)
-            if(!unitOfWork.PaymentRepository.Delete(InvoiceId))
+            if(!unitOfWork.PaymentRepository.Delete(item.PaymentId))
                 unitOfWork.Rollback();
         
         unitOfWork.InvoiceRepository.Delete(InvoiceId);
