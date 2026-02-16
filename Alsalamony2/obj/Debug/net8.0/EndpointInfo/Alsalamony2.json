@@ -339,6 +339,29 @@
         }
       }
     },
+    "/InvoiceItem/GetInvoiceItemsByInvoiceId/{invoiceId}": {
+      "get": {
+        "tags": [
+          "InvoiceItem"
+        ],
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Payment/Get/{paymentId}": {
       "get": {
         "tags": [

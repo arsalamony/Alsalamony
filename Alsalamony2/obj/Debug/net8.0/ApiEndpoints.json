@@ -201,6 +201,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Alsalamony2.Controllers.InvoiceItemController",
+    "Method": "GetInvoiceItemsByInvoiceId",
+    "RelativePath": "InvoiceItem/GetInvoiceItemsByInvoiceId/{invoiceId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "invoiceId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Alsalamony.Controllers.PaymentController",
     "Method": "AddPayment",
     "RelativePath": "Payment/Add",

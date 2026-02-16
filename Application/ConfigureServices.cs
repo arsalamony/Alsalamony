@@ -2,6 +2,7 @@
 using Application.Services.Auth;
 using Application.Services.Customer;
 using Application.Services.Invoice;
+using Application.Services.InvoiceItem;
 using Application.Services.Payment;
 using Application.Services.Product;
 using Application.Services.SystemRecord;
@@ -27,6 +28,7 @@ public static class ConfigureServices
         services.AddScoped<IPaymentServices, PaymentServices>();
         services.AddScoped<IUserProductServices, UserProductServices>();
         services.AddScoped<ITaskServices, TaskServices>();
+        services.AddScoped<IInvoiceItemSerivces, InvoiceItemServices>();
         services.AddScoped<ISystemRecordServices, SystemRecordServices>();
 
         //services.AddMapsterConfig();

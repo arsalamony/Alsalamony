@@ -127,7 +127,7 @@ public class InvoiceServices : IInvoiceServices
         }
 
         // Map Invoice Items
-        invoice.InvoiceItems = request.InvoiceItems.Select(itemRequest => new InvoiceItem
+        invoice.InvoiceItems = request.InvoiceItems.Select(itemRequest => new Domain.Entities.InvoiceItem
         {
             InvoiceId = invoice.InvoiceId,
             ProductId = itemRequest.ProductId,
