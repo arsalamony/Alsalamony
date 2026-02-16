@@ -58,7 +58,16 @@ public class PaymentRepository : IGenericRepository<Payment>, IPaymentRepository
 
     public bool Delete(int id)
     {
-        throw new NotImplementedException();
+        int rowAffected = 0;
+
+        using (SqlCommand command = new SqlCommand("Delete from Payments where PaymentId = @PaymentId;", connection, transaction))
+        {
+            command.Parameters.AddWithValue("@PaymentId", id);
+
+            rowAffected = command.ExecuteNonQuery();
+        }
+
+        return rowAffected > 0;
     }
 
     public Payment Find(int id)
