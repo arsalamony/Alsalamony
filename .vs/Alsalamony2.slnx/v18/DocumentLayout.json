@@ -3,32 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\controllers\\invoicecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\controllers\\invoicecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5872AEB3-BAA3-FE31-B0EB-0FB6DBEDCF83}|Infrastructure\\Infrastructure.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\infrastructure\\persistence\\repositories\\reportrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5872AEB3-BAA3-FE31-B0EB-0FB6DBEDCF83}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\repositories\\reportrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\application\\services\\invoice\\invoiceservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\services\\invoice\\invoiceservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\application\\contracts\\report\\dayincome.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\contracts\\report\\dayincome.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5872AEB3-BAA3-FE31-B0EB-0FB6DBEDCF83}|Infrastructure\\Infrastructure.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\infrastructure\\persistence\\repositories\\paymentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5872AEB3-BAA3-FE31-B0EB-0FB6DBEDCF83}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\repositories\\paymentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\controllers\\invoiceitemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\controllers\\invoiceitemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\application\\contracts\\invoiceitem\\invoiceitemresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\contracts\\invoiceitem\\invoiceitemresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\application\\configureservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\configureservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\application\\services\\invoiceitem\\invoiceitemservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\services\\invoiceitem\\invoiceitemservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,93 +42,40 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PaymentRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Infrastructure\\Persistence\\Repositories\\PaymentRepository.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Repositories\\PaymentRepository.cs",
-              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Infrastructure\\Persistence\\Repositories\\PaymentRepository.cs",
-              "RelativeToolTip": "Infrastructure\\Persistence\\Repositories\\PaymentRepository.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAjwEYAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T13:03:38.698Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "InvoiceController.cs",
-              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\InvoiceController.cs",
-              "RelativeDocumentMoniker": "Alsalamony2\\Controllers\\InvoiceController.cs",
-              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\InvoiceController.cs",
-              "RelativeToolTip": "Alsalamony2\\Controllers\\InvoiceController.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAowD0AAAAEAAAAAAAAAA==",
+              "Title": "ReportRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Infrastructure\\Persistence\\Repositories\\ReportRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Repositories\\ReportRepository.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Infrastructure\\Persistence\\Repositories\\ReportRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\Repositories\\ReportRepository.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwBsAAABKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T13:01:12.879Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ConfigureServices.cs",
-              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\ConfigureServices.cs",
-              "RelativeDocumentMoniker": "Application\\ConfigureServices.cs",
-              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\ConfigureServices.cs",
-              "RelativeToolTip": "Application\\ConfigureServices.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAgwB4AAABIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T11:45:48.002Z",
+              "WhenOpened": "2026-02-26T16:37:54.586Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "InvoiceServices.cs",
-              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Services\\Invoice\\InvoiceServices.cs",
-              "RelativeDocumentMoniker": "Application\\Services\\Invoice\\InvoiceServices.cs",
-              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Services\\Invoice\\InvoiceServices.cs",
-              "RelativeToolTip": "Application\\Services\\Invoice\\InvoiceServices.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAA5wDYBAAAIAAAAAAAAAA==",
+              "Title": "DayIncome.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Contracts\\Report\\DayIncome.cs",
+              "RelativeDocumentMoniker": "Application\\Contracts\\Report\\DayIncome.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Contracts\\Report\\DayIncome.cs",
+              "RelativeToolTip": "Application\\Contracts\\Report\\DayIncome.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T11:38:37.548Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-26T16:30:37.523Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "InvoiceItemResponse.cs",
-              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Contracts\\InvoiceItem\\InvoiceItemResponse.cs",
-              "RelativeDocumentMoniker": "Application\\Contracts\\InvoiceItem\\InvoiceItemResponse.cs",
-              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Contracts\\InvoiceItem\\InvoiceItemResponse.cs",
-              "RelativeToolTip": "Application\\Contracts\\InvoiceItem\\InvoiceItemResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "ReportController.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\ReportController.cs",
+              "RelativeDocumentMoniker": "Alsalamony2\\Controllers\\ReportController.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\ReportController.cs",
+              "RelativeToolTip": "Alsalamony2\\Controllers\\ReportController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T11:29:38.976Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "InvoiceItemController.cs",
-              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\InvoiceItemController.cs",
-              "RelativeDocumentMoniker": "Alsalamony2\\Controllers\\InvoiceItemController.cs",
-              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\InvoiceItemController.cs",
-              "RelativeToolTip": "Alsalamony2\\Controllers\\InvoiceItemController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T11:18:28.072Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "InvoiceItemServices.cs",
-              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Services\\InvoiceItem\\InvoiceItemServices.cs",
-              "RelativeDocumentMoniker": "Application\\Services\\InvoiceItem\\InvoiceItemServices.cs",
-              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Services\\InvoiceItem\\InvoiceItemServices.cs",
-              "RelativeToolTip": "Application\\Services\\InvoiceItem\\InvoiceItemServices.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAcAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T08:12:11.621Z"
+              "WhenOpened": "2026-02-26T15:56:48.01Z"
             }
           ]
         }

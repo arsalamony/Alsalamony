@@ -349,6 +349,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Alsalamony2.Controllers.ReportController",
+    "Method": "GetIncomeReport",
+    "RelativePath": "Report/Income",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Alsalamony2.Controllers.SystemRecordController",
     "Method": "GetAll",
     "RelativePath": "SystemRecord/All",

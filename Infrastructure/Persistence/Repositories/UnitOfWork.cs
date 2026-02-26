@@ -41,6 +41,8 @@ public class UnitOfWork : IUnitOfWork
 
     public ISystemRecordRepository SystemRecordRepository => new SystemRecordRepository(_connection, _transaction);
 
+    public IReportRepository ReportRepository => new ReportRepository(_connection, _transaction);
+
     public void Commit()
     {
         _transaction.Commit();

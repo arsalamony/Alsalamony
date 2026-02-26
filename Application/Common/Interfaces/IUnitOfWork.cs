@@ -26,4 +26,6 @@ public interface IUnitOfWork : IDisposable
     ITaskRepository TaskRepository { get; }
 
     ISystemRecordRepository SystemRecordRepository { get; }
+
+    IReportRepository ReportRepository { get; }
 }

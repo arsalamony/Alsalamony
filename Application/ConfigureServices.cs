@@ -5,6 +5,7 @@ using Application.Services.Invoice;
 using Application.Services.InvoiceItem;
 using Application.Services.Payment;
 using Application.Services.Product;
+using Application.Services.Report;
 using Application.Services.SystemRecord;
 using Application.Services.Task;
 using Application.Services.User;
@@ -30,6 +31,7 @@ public static class ConfigureServices
         services.AddScoped<ITaskServices, TaskServices>();
         services.AddScoped<IInvoiceItemSerivces, InvoiceItemServices>();
         services.AddScoped<ISystemRecordServices, SystemRecordServices>();
+        services.AddScoped<IReportServices, ReportServices>();
 
         //services.AddMapsterConfig();
         //services.AddFluentValidationConfig();
