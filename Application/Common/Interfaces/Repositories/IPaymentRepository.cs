@@ -9,7 +9,8 @@ namespace Application.Common.Interfaces.Repositories;
 public interface IPaymentRepository : IGenericRepository<Payment>
 {
     IEnumerable<Payment> GetAll();
-
+    IEnumerable<PaymentViewResponse> GetAllPaged(int PageNo, int RowsNo);
     IEnumerable<Payment> GetAll(int InvoiceId);
 
+    int GetPaymentNo();
 }

@@ -12,9 +12,13 @@ public interface IPaymentServices
 
     Result<PaymentResponse> AddByAdmin(AddPaymentByAdminRequest request);
 
-    Result<IEnumerable<PaymentViewResponse>> GetAll();
+    Result<IEnumerable<PaymentViewResponse>> GetAllPaged(int PageNo, int RowsNo);
 
     Result<IEnumerable<PaymentViewResponse>> GetAll(int UserId, bool IsAdmin);
+
+    Result<int> GetPaymentsNo();
+
+    Result Delete(int PaymentId);
 
     Result FinshAllPayment(int UserId);
 

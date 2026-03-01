@@ -119,26 +119,11 @@ public class PaymentServices : IPaymentServices
     }
 
     // Get all payments
-    public Result<IEnumerable<PaymentViewResponse>> GetAll()
+    public Result<IEnumerable<PaymentViewResponse>> GetAllPaged(int PageNo, int RowsNo)
     {
-        var payments = unitOfWork.PaymentRepository.GetAll();
-        foreach (var payment in payments)
-        {
-            payment.CreatedByUser = unitOfWork.UserRepository.Find(payment.CreatedByUserId);
-        }
-        var response = payments.OrderByDescending(e => e.PaymentDate).Select(payment => new PaymentViewResponse
-        {
-            PaymentId = payment.PaymentId,
-            InvoiceId = payment.InvoiceId,
-            Amount = payment.Amount,
-            PaymentDate = payment.PaymentDate,
-            PaymentMethod = payment.PaymentMethod == enPaymentMethod.Cash ? "كاش" : payment.PaymentMethod == enPaymentMethod.VodafoneCash ? "تلفون المحل" : "بابا",
-            CreatedBy = payment.CreatedByUser!.Name,
-            Added = payment.Added,
-            Finshed = payment.Finshed,
-            Notes = payment.Notes
-        });
-        return Result.Success(response);
+        var payments = unitOfWork.PaymentRepository.GetAllPaged(PageNo, RowsNo);
+
+        return Result.Success(payments);
     }
 
 
@@ -172,7 +157,23 @@ public class PaymentServices : IPaymentServices
         return Result.Success(response);
     }
 
+    public Result Delete(int PaymentId)
+    {
+        var payment = unitOfWork.PaymentRepository.Find(PaymentId);
 
+        if (payment.InvoiceId is not null)
+        {
+            payment.Invoice = unitOfWork.InvoiceRepository.Find((int)payment.InvoiceId);
+
+            payment.Invoice.AmountPaid -= payment.Amount;
+
+            unitOfWork.InvoiceRepository.Update(payment.Invoice); // if failed the global exception handler will catch it and rollback the transaction
+        }
+
+        unitOfWork.PaymentRepository.Delete(payment.PaymentId);
+        unitOfWork.Commit();
+        return Result.Success();
+    }
     public Result FinshAllPayment(int UserId)
     {
         var payments = unitOfWork.PaymentRepository.GetAll();
@@ -214,4 +215,8 @@ public class PaymentServices : IPaymentServices
         return Result.Success();
     }
 
+    public Result<int> GetPaymentsNo()
+    {
+        return Result.Success(unitOfWork.PaymentRepository.GetPaymentNo());
+    }
 }

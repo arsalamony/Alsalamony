@@ -48,11 +48,19 @@ public class PaymentController : ControllerBase
     }
 
 
-    [Authorize]
+    [Authorize(Roles ="Admin")]
     [HttpGet("GetAll")]
-    public IActionResult GetAllPayments()
+    public IActionResult GetAllPayments([FromQuery] int PageNo,[FromQuery] int PageSize)
     {
-        var result = paymentServices.GetAll();
+        var result = paymentServices.GetAllPaged(PageNo, PageSize);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpGet("PaymentNo")]
+    public IActionResult GetPaymentsNo()
+    {
+        var result = paymentServices.GetPaymentsNo();
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
@@ -62,6 +70,14 @@ public class PaymentController : ControllerBase
     {
         var result = paymentServices.GetAll(userId, User.IsAdmin());
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
+    [Authorize(Roles ="Admin")]
+    [HttpDelete("Delete/{paymentId}")]
+    public IActionResult DeletePayment([FromRoute] int paymentId)
+    {
+        var result = paymentServices.Delete(paymentId);
+        return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 
 

@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5872AEB3-BAA3-FE31-B0EB-0FB6DBEDCF83}|Infrastructure\\Infrastructure.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\infrastructure\\persistence\\repositories\\reportrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5872AEB3-BAA3-FE31-B0EB-0FB6DBEDCF83}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\repositories\\reportrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\controllers\\paymentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\controllers\\paymentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\application\\contracts\\report\\dayincome.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\contracts\\report\\dayincome.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\application\\services\\payment\\paymentservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\services\\payment\\paymentservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\alsalamony2\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2257327C-8027-28DB-5BDC-B6CAAC1E920F}|Alsalamony2\\Alsalamony2.csproj|solutionrelative:alsalamony2\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5872AEB3-BAA3-FE31-B0EB-0FB6DBEDCF83}|Infrastructure\\Infrastructure.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\infrastructure\\persistence\\repositories\\paymentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5872AEB3-BAA3-FE31-B0EB-0FB6DBEDCF83}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\repositories\\paymentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\application\\common\\interfaces\\repositories\\ipaymentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\common\\interfaces\\repositories\\ipaymentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\abdallah\\source\\repos\\alsalamony2\\application\\contracts\\payment\\paymentviewresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\contracts\\payment\\paymentviewresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,8 +30,64 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PaymentController.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\PaymentController.cs",
+              "RelativeDocumentMoniker": "Alsalamony2\\Controllers\\PaymentController.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\PaymentController.cs",
+              "RelativeToolTip": "Alsalamony2\\Controllers\\PaymentController.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAA0wEgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T16:30:33.786Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PaymentServices.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Services\\Payment\\PaymentServices.cs",
+              "RelativeDocumentMoniker": "Application\\Services\\Payment\\PaymentServices.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Services\\Payment\\PaymentServices.cs",
+              "RelativeToolTip": "Application\\Services\\Payment\\PaymentServices.cs",
+              "ViewState": "AgIAAIMAAAAAAAAAAAAcwK0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T16:32:44.772Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PaymentRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Infrastructure\\Persistence\\Repositories\\PaymentRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Repositories\\PaymentRepository.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Infrastructure\\Persistence\\Repositories\\PaymentRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\Repositories\\PaymentRepository.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAQwEYAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T16:33:14.355Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IPaymentRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Common\\Interfaces\\Repositories\\IPaymentRepository.cs",
+              "RelativeDocumentMoniker": "Application\\Common\\Interfaces\\Repositories\\IPaymentRepository.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Common\\Interfaces\\Repositories\\IPaymentRepository.cs",
+              "RelativeToolTip": "Application\\Common\\Interfaces\\Repositories\\IPaymentRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T17:01:09.71Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
@@ -42,40 +106,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ReportRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Infrastructure\\Persistence\\Repositories\\ReportRepository.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Repositories\\ReportRepository.cs",
-              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Infrastructure\\Persistence\\Repositories\\ReportRepository.cs",
-              "RelativeToolTip": "Infrastructure\\Persistence\\Repositories\\ReportRepository.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAgwBsAAABKAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "PaymentViewResponse.cs",
+              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Contracts\\Payment\\PaymentViewResponse.cs",
+              "RelativeDocumentMoniker": "Application\\Contracts\\Payment\\PaymentViewResponse.cs",
+              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Contracts\\Payment\\PaymentViewResponse.cs",
+              "RelativeToolTip": "Application\\Contracts\\Payment\\PaymentViewResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-26T16:37:54.586Z",
+              "WhenOpened": "2026-02-28T23:57:04.288Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DayIncome.cs",
-              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Contracts\\Report\\DayIncome.cs",
-              "RelativeDocumentMoniker": "Application\\Contracts\\Report\\DayIncome.cs",
-              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Application\\Contracts\\Report\\DayIncome.cs",
-              "RelativeToolTip": "Application\\Contracts\\Report\\DayIncome.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-26T16:30:37.523Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ReportController.cs",
-              "DocumentMoniker": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\ReportController.cs",
-              "RelativeDocumentMoniker": "Alsalamony2\\Controllers\\ReportController.cs",
-              "ToolTip": "C:\\Users\\Abdallah\\source\\repos\\Alsalamony2\\Alsalamony2\\Controllers\\ReportController.cs",
-              "RelativeToolTip": "Alsalamony2\\Controllers\\ReportController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-26T15:56:48.01Z"
             }
           ]
         }

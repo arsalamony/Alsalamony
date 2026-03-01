@@ -170,6 +170,51 @@ public class PaymentRepository : IGenericRepository<Payment>, IPaymentRepository
         return Payments;
     }
 
+    public IEnumerable<PaymentViewResponse> GetAllPaged(int PageNo, int RowsNo)
+    {
+        List<PaymentViewResponse> Payments = new List<PaymentViewResponse>();
+
+        using (SqlCommand command = new SqlCommand("SP_GetPaymentsPaged", connection, transaction))
+        {
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@PageNumber", PageNo);
+            command.Parameters.AddWithValue("@PageSize", RowsNo);
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+
+                    Payments.Add(new PaymentViewResponse
+                    {
+                        PaymentId = (int)reader["PaymentId"],
+                        InvoiceId = reader.IsDBNull(reader.GetOrdinal("InvoiceId")) ? null : reader.GetInt32(reader.GetOrdinal("InvoiceId")),
+                        Amount = (decimal)reader["Amount"],
+                        PaymentDate = (DateTime)reader["PaymentDate"],
+                        PaymentMethod = ((byte)reader["PaymentMethod"]) == 1? "كاش": ((byte)reader["PaymentMethod"]) == 2 ? "تلفون المحل":"بابا",
+                        CreatedBy = (string)reader["Name"],
+                        Added = (bool)reader["Added"],
+                        Finshed = (bool)reader["Finshed"],
+                        Notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? null : reader.GetString(reader.GetOrdinal("Notes"))
+                    });
+                }
+            }
+        }
+
+        return Payments;
+    }
+
+    public int GetPaymentNo()
+    {
+        int PaymentNo = 0;
+
+            using (SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Payments;", connection, transaction))
+            {
+                PaymentNo = (int)command.ExecuteScalar();
+        }
+        return PaymentNo;
+    }
+
     public bool Update(Payment entity)
     {
         int rowAffected = 0;

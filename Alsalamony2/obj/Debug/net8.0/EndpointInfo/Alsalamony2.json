@@ -452,6 +452,36 @@
         "tags": [
           "Payment"
         ],
+        "parameters": [
+          {
+            "name": "PageNo",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Payment/PaymentNo": {
+      "get": {
+        "tags": [
+          "Payment"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -467,6 +497,29 @@
         "parameters": [
           {
             "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Payment/Delete/{paymentId}": {
+      "delete": {
+        "tags": [
+          "Payment"
+        ],
+        "parameters": [
+          {
+            "name": "paymentId",
             "in": "path",
             "required": true,
             "schema": {
