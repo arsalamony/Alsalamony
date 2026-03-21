@@ -23,44 +23,43 @@ public class InvoiceController : ControllerBase
 
     [Authorize]
     [HttpGet("GetAllUnpayed")]
-    public IActionResult GetAllUnpayed([FromQuery] int CustomerId) 
+    public async Task<IActionResult> GetAllUnpayed([FromQuery] int CustomerId) 
     {
-        var result = invoiceServices.GetAllUnpayed(CustomerId);
+        var result = await invoiceServices.GetAllUnpayed(CustomerId);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
     [Authorize]
     [HttpGet("Get/{invoiceId}")]
-    public IActionResult GetInvoice([FromRoute]int invoiceId)
+    public async Task<IActionResult> GetInvoice([FromRoute]int invoiceId)
     {
-        var result = invoiceServices.Get(invoiceId);
+        var result = await invoiceServices.Get(invoiceId);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
     [Authorize]
     [HttpPost("Add")]
-    public IActionResult AddInvoice([FromBody] AddInvoiceRequest request)
+    public async Task<IActionResult> AddInvoice([FromBody] AddInvoiceRequest request)
     {
         int UserId = User.GetUserId();
-        var result = invoiceServices.Add(UserId, request);
+        var result = await invoiceServices.Add(UserId, request);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
     [Authorize]
     [HttpPost("InvoicePayment")]
-    public IActionResult InvoicePayment([FromBody] AddInvoicePaymentRequest request)
+    public async Task<IActionResult> InvoicePayment([FromBody] AddInvoicePaymentRequest request)
     {
         int UserId = User.GetUserId();
-        var result = invoiceServices.InvoicePayment(UserId, request);
+        var result = await invoiceServices.InvoicePayment(UserId, request);
         return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 
     [Authorize(Roles = "Admin")]
     [HttpDelete("FullDelete/{id}")]
-
-    public IActionResult FullDelete(int id) 
+    public async Task<IActionResult> FullDelete(int id) 
     {
-        var re = invoiceServices.FullDelete(id);
+        var re = await invoiceServices.FullDelete(id);
         return re.IsSuccess? NoContent() : re.ToProblem();
     }
 

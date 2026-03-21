@@ -1,0 +1,16 @@
+﻿using Application.Common.Results;
+using Application.Contracts.Report;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+
+namespace Application.Services.Report;
+
+public interface IReportServices
+{
+
+    Task<Result<IEnumerable<DayIncome>>> GetDayIncomeReport(CancellationToken cancellationToken = default);
+}

@@ -10,5 +10,5 @@ namespace Application.Services.InvoiceItem;
 
 public interface IInvoiceItemSerivces
 {
-    Result<IEnumerable<InvoiceItemResponse>> GetInvoiceItemsByInvoiceId(int invoiceId); 
+    Task<Result<IEnumerable<InvoiceItemResponse>>> GetInvoiceItemsByInvoiceId(int invoiceId); 
 }

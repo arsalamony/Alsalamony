@@ -23,34 +23,34 @@ public class UserController : ControllerBase
 
     [Authorize]
     [HttpGet("GetAll")]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        var re = _User.GetUsers();
+        var re = await _User.GetUsers();
         return re.IsSuccess ? Ok(re.Value) : re.ToProblem();
     }
 
     [Authorize]
     [HttpGet("Get/{id}")]
-    public IActionResult Get([FromRoute] int id)
+    public async Task<IActionResult> Get([FromRoute] int id)
     {
-        var result = _User.Get(id);
+        var result = await _User.Get(id);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
 
     [Authorize(Roles = "Admin")]
     [HttpDelete("Delete/{id}")]
-    public IActionResult Delete([FromRoute] int id) 
+    public async Task<IActionResult> Delete([FromRoute] int id) 
     {
-        var re = _User.Delete(id);
+        var re = await _User.Delete(id);
         return re.IsSuccess? NoContent() : re.ToProblem();
     }
 
     [Authorize]
     [HttpPut("UpdateLocation")]
-    public IActionResult UpdateLocation(GetLocationRequest request) 
+    public async Task<IActionResult> UpdateLocation(GetLocationRequest request) 
     {
-        var re = _User.GetLocation(User.GetUserId(), request);
+        var re = await _User.GetLocation(User.GetUserId(), request);
         return re.IsSuccess? NoContent(): re.ToProblem();
     }
 }

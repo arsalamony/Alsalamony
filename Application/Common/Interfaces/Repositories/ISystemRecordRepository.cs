@@ -1,8 +1,10 @@
 ﻿using Domain.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Application.Common.Interfaces.Repositories;
 
 public interface ISystemRecordRepository : IGenericRepository<SystemRecord>
 {
-    IEnumerable<SystemRecord> GetAll();
+    Task<IEnumerable<SystemRecord>> GetAll();
 }

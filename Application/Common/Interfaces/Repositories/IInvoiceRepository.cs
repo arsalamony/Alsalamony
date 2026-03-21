@@ -1,14 +1,13 @@
 ﻿using Application.Contracts.Invoice;
 using Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.Common.Interfaces.Repositories;
 
 public interface IInvoiceRepository : IGenericRepository<Invoice>
 {
-    ICollection<Invoice> GetInvoicesByCustomerId(int customerId);
+    Task<ICollection<Invoice>> GetInvoicesByCustomerId(int customerId);
 
-    List<UnpaidInvoiceRow> GetAllUnpayedRowsByCustomerId(int customerId);
+    Task<List<UnpaidInvoiceRow>> GetAllUnpayedRowsByCustomerId(int customerId);
 }

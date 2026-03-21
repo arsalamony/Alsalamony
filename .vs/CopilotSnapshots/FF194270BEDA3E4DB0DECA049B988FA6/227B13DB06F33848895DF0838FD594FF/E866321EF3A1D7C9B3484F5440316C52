@@ -1,0 +1,28 @@
+﻿using Application.Common.Results;
+using Application.Contracts.Payment;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.Generic;
+
+namespace Application.Services.Payment;
+
+public interface IPaymentServices
+{
+    Task<Result<PaymentResponse>> Get(int Id, CancellationToken cancellationToken = default);
+
+    Task<Result<PaymentResponse>> Add(int UserId, AddPaymentRequest request, CancellationToken cancellationToken = default);
+
+    Task<Result<PaymentResponse>> AddByAdmin(AddPaymentByAdminRequest request, CancellationToken cancellationToken = default);
+
+    Task<Result<IEnumerable<PaymentViewResponse>>> GetAllPaged(int PageNo, int RowsNo, CancellationToken cancellationToken = default);
+
+    Task<Result<IEnumerable<PaymentViewResponse>>> GetAll(int UserId, bool IsAdmin, CancellationToken cancellationToken = default);
+
+    Task<Result<int>> GetPaymentsNo(CancellationToken cancellationToken = default);
+
+    Task<Result> Delete(int PaymentId, CancellationToken cancellationToken = default);
+
+    Task<Result> FinshAllPayment(int UserId, CancellationToken cancellationToken = default);
+
+    Task<Result> FinshPayment(int PaymentId, CancellationToken cancellationToken = default);
+}

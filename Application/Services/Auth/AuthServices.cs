@@ -23,23 +23,25 @@ public class AuthServices : IAuthServices
     }
 
 
-    public Result<AuthResponse> Login(LoginRequest loginRequest)
+    public async Task<Result<AuthResponse>> Login(LoginRequest loginRequest)
     {
-        var user = unitOfWork.UserRepository.Find(loginRequest.Username);
+        await unitOfWork.OpenAsync(true);
+        var user = await unitOfWork.UserRepository.Find(loginRequest.Username);
 
         if (user == null || !BCrypt.Net.BCrypt.Verify(loginRequest.Password, user.Password))
             return Result.Failure<AuthResponse>(UserErrors.UserNotFound);
 
-        
 
         var (tokenString, ExpireIn) = jwtProvider.GenerateToken(user);
 
         return Result.Success(new AuthResponse { Token = tokenString, Name = user.Name, Role = user.Role, UserId = user.UserId });
     }
 
-    public Result Register(AddUserRequest request)
+    public async Task<Result> Register(AddUserRequest request)
     {
-        var re = userServices.Add(request); // commited itselt
+        await unitOfWork.OpenAsync(true);
+
+        var re = await userServices.Add(request); // commited itselt
 
 
         return re.IsSuccess ? Result.Success() : Result.Failure(UserErrors.UserAddFailed);

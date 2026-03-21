@@ -1,0 +1,230 @@
+﻿using Application.Common.Errors;
+using Application.Common.Interfaces;
+using Application.Common.Results;
+using Application.Contracts.Payment;
+using Domain.Enums;
+using System.Linq;
+
+namespace Application.Services.Payment;
+
+public class PaymentServices : IPaymentServices
+{
+    private readonly IUnitOfWork unitOfWork;
+
+    public PaymentServices(IUnitOfWork unitOfWork)
+    {
+        this.unitOfWork = unitOfWork;
+    }
+    public async Task<Result<PaymentResponse>> Get(int Id)
+    {
+        await unitOfWork.OpenAsync(true);
+        var payment = await unitOfWork.PaymentRepository.Find(Id);
+
+        if (payment == null)
+            return Result.Failure<PaymentResponse>(PaymentErrors.PaymentNotFound);
+
+        payment.CreatedByUser = await unitOfWork.UserRepository.Find(payment.CreatedByUserId);
+
+        var response = new PaymentResponse
+        {
+            PaymentId = payment.PaymentId,
+            InvoiceId = payment.InvoiceId,
+            Amount = payment.Amount,
+            PaymentDate = payment.PaymentDate,
+            PaymentMethod = payment.PaymentMethod == enPaymentMethod.Cash? "كاش": payment.PaymentMethod == enPaymentMethod.VodafoneCash? "تلفون المحل":"بابا",
+            CreatedBy = payment.CreatedByUser.Name,
+            Status = payment.Added ? "تحصيل" : "استقطاع",
+            Finshed = payment.Finshed ? "منتهيه" : "غير منتهيه",
+            Notes = payment.Notes
+        };
+
+        return Result.Success(response);
+    }
+
+    public async Task<Result<PaymentResponse>> Add(int UserId, AddPaymentRequest request)
+    {
+        await unitOfWork.OpenAsync(false);
+        Domain.Entities.Payment payment = new Domain.Entities.Payment
+        {
+            Amount = request.Amount,
+            PaymentDate = DateTime.Now,
+            PaymentMethod = request.PaymentMethod,
+            CreatedByUserId = UserId,
+            Notes = request.Notes,
+            Added = request.Added,
+            Finshed = false
+        };
+        if (!await unitOfWork.PaymentRepository.Add(payment))
+        {
+            unitOfWork.Rollback();
+            return Result.Failure<PaymentResponse>(PaymentErrors.PaymentAddFailed);
+        }
+
+
+
+        payment.CreatedByUser = await unitOfWork.UserRepository.Find(payment.CreatedByUserId);
+
+        var response = new PaymentResponse
+        {
+            PaymentId = payment.PaymentId,
+            InvoiceId = payment.InvoiceId,
+            Amount = payment.Amount,
+            PaymentDate = payment.PaymentDate,
+            PaymentMethod = payment.PaymentMethod == enPaymentMethod.Cash ? "كاش" : payment.PaymentMethod == enPaymentMethod.VodafoneCash ? "تلفون المحل" : "بابا",
+            CreatedBy = payment.CreatedByUser.Name,
+            Status = payment.Added ? "تحصيل" : "استقطاع",
+            Finshed = payment.Finshed ? "منتهيه" : "غير منتهيه",
+            Notes = payment.Notes
+        };
+
+        unitOfWork.Commit();
+        return Result.Success(response);
+    }
+    public async Task<Result<PaymentResponse>> AddByAdmin(AddPaymentByAdminRequest request)
+    {
+        await unitOfWork.OpenAsync(false);
+        Domain.Entities.Payment payment = new Domain.Entities.Payment
+        {
+            Amount = request.Amount,
+            PaymentDate = DateTime.Now,
+            PaymentMethod = request.PaymentMethod,
+            CreatedByUserId = request.CreatedByUserId,
+            Notes = request.Notes,
+            Added = request.Added,
+            Finshed = false
+        };
+        if (!await unitOfWork.PaymentRepository.Add(payment)) 
+        {
+            unitOfWork.Rollback();
+            return Result.Failure<PaymentResponse>(PaymentErrors.PaymentAddFailed);
+        }
+
+
+
+        payment.CreatedByUser = await unitOfWork.UserRepository.Find(payment.CreatedByUserId);
+
+        var response = new PaymentResponse
+        {
+            PaymentId = payment.PaymentId,
+            InvoiceId = payment.InvoiceId,
+            Amount = payment.Amount,
+            PaymentDate = payment.PaymentDate,
+            PaymentMethod = payment.PaymentMethod == enPaymentMethod.Cash ? "كاش" : payment.PaymentMethod == enPaymentMethod.VodafoneCash ? "تلفون المحل" : "بابا",
+            CreatedBy = payment.CreatedByUser.Name,
+            Status = payment.Added ? "تحصيل" : "استقطاع",
+            Finshed = payment.Finshed ? "منتهيه" : "غير منتهيه",
+            Notes = payment.Notes
+        };
+
+        unitOfWork.Commit();
+        return Result.Success(response);
+    }
+
+    // Get all payments
+    public async Task<Result<IEnumerable<PaymentViewResponse>>> GetAllPaged(int PageNo, int RowsNo)
+    {
+        await unitOfWork.OpenAsync(true);
+        var payments = await unitOfWork.PaymentRepository.GetAllPaged(PageNo, RowsNo);
+
+        return Result.Success(payments);
+    }
+
+
+    /// <summary>
+    /// Get all payments for a specific user (or all if Admin) that are not finished
+    /// </summary>
+    /// <param name="UserId"></param>
+    /// <returns></returns>
+    public async Task<Result<IEnumerable<PaymentViewResponse>>> GetAll(int UserId, bool IsAdmin)
+    {
+        await unitOfWork.OpenAsync(true);
+        var payments = await unitOfWork.PaymentRepository.GetAll();
+        var paymentViews = payments.Where(e => (IsAdmin || e.CreatedByUserId == UserId) && !e.Finshed);
+
+        foreach (var payment in paymentViews)
+        {
+            payment.CreatedByUser = await unitOfWork.UserRepository.Find(payment.CreatedByUserId);
+        }
+
+        var response = paymentViews.OrderByDescending(e => e.PaymentDate).Select(payment => new PaymentViewResponse
+        {
+            PaymentId = payment.PaymentId,
+            InvoiceId = payment.InvoiceId,
+            Amount = payment.Amount,
+            PaymentDate = payment.PaymentDate,
+            PaymentMethod = payment.PaymentMethod == enPaymentMethod.Cash ? "كاش" : payment.PaymentMethod == enPaymentMethod.VodafoneCash ? "تلفون المحل" : "بابا",
+            CreatedBy = payment.CreatedByUser!.Name,
+            Added = payment.Added,
+            Finshed = payment.Finshed,
+            Notes = payment.Notes
+        });
+        return Result.Success(response);
+    }
+
+    public async Task<Result> Delete(int PaymentId)
+    {
+        await unitOfWork.OpenAsync(false);
+        var payment = await unitOfWork.PaymentRepository.Find(PaymentId);
+
+        if (payment.InvoiceId is not null)
+        {
+            payment.Invoice = await unitOfWork.InvoiceRepository.Find((int)payment.InvoiceId);
+
+            payment.Invoice.AmountPaid -= payment.Amount;
+
+            await unitOfWork.InvoiceRepository.Update(payment.Invoice); // if failed the global exception handler will catch it and rollback the transaction
+        }
+
+        await unitOfWork.PaymentRepository.Delete(payment.PaymentId);
+        unitOfWork.Commit();
+        return Result.Success();
+    }
+    public async Task<Result> FinshAllPayment(int UserId)
+    {
+        await unitOfWork.OpenAsync(false);
+        var payments = await unitOfWork.PaymentRepository.GetAll();
+
+        foreach (var payment in payments)
+        {
+            if(payment.CreatedByUserId == UserId && !payment.Finshed)
+            {
+                payment.Finshed = true;
+                if (!await unitOfWork.PaymentRepository.Update(payment))
+                {
+                    unitOfWork.Rollback();
+                    return Result.Failure(PaymentErrors.PaymentUpdateFailed);
+                }
+            }
+        }
+
+        unitOfWork.Commit();
+        return Result.Success();
+    }
+
+
+    public async Task<Result> FinshPayment(int PaymentId)
+    {
+        await unitOfWork.OpenAsync(false);
+        var payment = await unitOfWork.PaymentRepository.Find(PaymentId);
+
+        if (payment == null)
+            return Result.Failure(PaymentErrors.PaymentNotFound);
+
+        payment.Finshed = true;
+
+        if(!await unitOfWork.PaymentRepository.Update(payment))
+        {
+            unitOfWork.Rollback();
+            return Result.Failure(PaymentErrors.PaymentUpdateFailed);
+        }
+
+        unitOfWork.Commit();
+        return Result.Success();
+    }
+
+    public async Task<Result<int>> GetPaymentsNo()
+    {
+        await unitOfWork.OpenAsync(true);
+        return Result.Success(await unitOfWork.PaymentRepository.GetPaymentNo());
+    }
+}

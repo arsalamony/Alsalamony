@@ -18,11 +18,11 @@ public class PaymentRepository : IGenericRepository<Payment>, IPaymentRepository
         this.transaction = transaction;
     }
 
-    public bool Add(Payment entity)
+    public async Task<bool> Add(Payment entity)
     {
         bool isAdded = false;
 
-        using (SqlCommand command = new SqlCommand("AddPayment", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("AddPayment", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -40,7 +40,7 @@ public class PaymentRepository : IGenericRepository<Payment>, IPaymentRepository
                 Direction = ParameterDirection.Output,
             });
 
-            int rowAffected = command.ExecuteNonQuery();
+            int rowAffected = await command.ExecuteNonQueryAsync();
 
             if (rowAffected == 0)  // this means insert failed
             {
@@ -56,31 +56,31 @@ public class PaymentRepository : IGenericRepository<Payment>, IPaymentRepository
         return isAdded;
     }
 
-    public bool Delete(int id)
+    public async Task<bool> Delete(int id)
     {
         int rowAffected = 0;
 
-        using (SqlCommand command = new SqlCommand("Delete from Payments where PaymentId = @PaymentId;", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("Delete from Payments where PaymentId = @PaymentId;", connection, transaction))
         {
             command.Parameters.AddWithValue("@PaymentId", id);
 
-            rowAffected = command.ExecuteNonQuery();
+            rowAffected = await command.ExecuteNonQueryAsync();
         }
 
         return rowAffected > 0;
     }
 
-    public Payment Find(int id)
+    public async Task<Payment> Find(int id)
     {
         Payment Payment = null;
 
-        using (SqlCommand command = new SqlCommand("GetPaymentById", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("GetPaymentById", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@PaymentId", id);
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                if (reader.Read())
+                if (await reader.ReadAsync())
                 {
                     // The record was found
                     Payment = new Payment();
@@ -104,17 +104,17 @@ public class PaymentRepository : IGenericRepository<Payment>, IPaymentRepository
         return Payment;
     }
 
-    public IEnumerable<Payment> GetAll()
+    public async Task<IEnumerable<Payment>> GetAll()
     {
         List<Payment> Payments = new List<Payment>();
 
-        using (SqlCommand command = new SqlCommand("GetAllPayments", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("GetAllPayments", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
 
                     Payments.Add(new Payment
@@ -136,19 +136,19 @@ public class PaymentRepository : IGenericRepository<Payment>, IPaymentRepository
         return Payments;
     }
 
-    public IEnumerable<Payment> GetAll(int InvoiceId)
+    public async Task<IEnumerable<Payment>> GetAll(int InvoiceId)
     {
         List<Payment> Payments = new List<Payment>();
 
-        using (SqlCommand command = new SqlCommand("GetAllPaymentsByInvoiceId", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("GetAllPaymentsByInvoiceId", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@InvoiceId", InvoiceId);
 
 
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
 
                     Payments.Add(new Payment
@@ -170,19 +170,19 @@ public class PaymentRepository : IGenericRepository<Payment>, IPaymentRepository
         return Payments;
     }
 
-    public IEnumerable<PaymentViewResponse> GetAllPaged(int PageNo, int RowsNo)
+    public async Task<IEnumerable<PaymentViewResponse>> GetAllPaged(int PageNo, int RowsNo)
     {
         List<PaymentViewResponse> Payments = new List<PaymentViewResponse>();
 
-        using (SqlCommand command = new SqlCommand("SP_GetPaymentsPaged", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_GetPaymentsPaged", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@PageNumber", PageNo);
             command.Parameters.AddWithValue("@PageSize", RowsNo);
 
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
 
                     Payments.Add(new PaymentViewResponse
@@ -204,22 +204,23 @@ public class PaymentRepository : IGenericRepository<Payment>, IPaymentRepository
         return Payments;
     }
 
-    public int GetPaymentNo()
+    public async Task<int> GetPaymentNo()
     {
         int PaymentNo = 0;
 
-            using (SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Payments;", connection, transaction))
+            using (SqlCommand command = ReposHelper.CreateCommand("SELECT COUNT(*) FROM Payments;", connection, transaction))
             {
-                PaymentNo = (int)command.ExecuteScalar();
+                var result = await command.ExecuteScalarAsync();
+                PaymentNo = (result == null || result == DBNull.Value) ? 0 : Convert.ToInt32(result);
         }
         return PaymentNo;
     }
 
-    public bool Update(Payment entity)
+    public async Task<bool> Update(Payment entity)
     {
         int rowAffected = 0;
 
-        using (SqlCommand command = new SqlCommand("UpdatePayment", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("UpdatePayment", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -233,7 +234,7 @@ public class PaymentRepository : IGenericRepository<Payment>, IPaymentRepository
             command.Parameters.AddWithValue("@Finshed", entity.Finshed);
             command.Parameters.AddWithValue("@Notes", entity.Notes != null ? entity.Notes : DBNull.Value);
 
-            rowAffected = command.ExecuteNonQuery();
+            rowAffected = await command.ExecuteNonQueryAsync();
         }
 
         return rowAffected > 0;

@@ -16,11 +16,11 @@ public class InvoiceRepository : IGenericRepository<Invoice>, IInvoiceRepository
         this.connection = connection;
         this.transaction = transaction;
     }
-    public bool Add(Invoice entity)
+    public async Task<bool> Add(Invoice entity)
     {
         bool isAdded = false;
 
-        using (SqlCommand command = new SqlCommand("AddInvoice", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("AddInvoice", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -37,7 +37,7 @@ public class InvoiceRepository : IGenericRepository<Invoice>, IInvoiceRepository
                 Direction = ParameterDirection.Output,
             });
 
-            int rowAffected = command.ExecuteNonQuery();
+            int rowAffected = await command.ExecuteNonQueryAsync();
 
             if (rowAffected == 0)  // this means insert failed
             {
@@ -53,34 +53,34 @@ public class InvoiceRepository : IGenericRepository<Invoice>, IInvoiceRepository
         return isAdded;
     }
 
-    public bool Delete(int id)
+    public async Task<bool> Delete(int id)
     {
         int rowAffected = 0;
 
-        using (SqlCommand command = new SqlCommand("SP_DeleteInvoice", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_DeleteInvoice", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
             command.Parameters.AddWithValue("@InvoiceId", id);
 
 
-            rowAffected = command.ExecuteNonQuery();
+            rowAffected = await command.ExecuteNonQueryAsync();
         }
 
         return rowAffected > 0;
     }
 
-    public Invoice Find(int id)
+    public async Task<Invoice> Find(int id)
     {
         Invoice Invoice = null;
 
-        using (SqlCommand command = new SqlCommand("GetInvoiceById", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("GetInvoiceById", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@InvoiceId", id);
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                if (reader.Read())
+                if (await reader.ReadAsync())
                 {
                     // The record was found
                     Invoice = new Invoice
@@ -103,18 +103,18 @@ public class InvoiceRepository : IGenericRepository<Invoice>, IInvoiceRepository
         return Invoice;
     }
 
-    public List<UnpaidInvoiceRow> GetAllUnpayedRowsByCustomerId(int customerId)
+    public async Task<List<UnpaidInvoiceRow>> GetAllUnpayedRowsByCustomerId(int customerId)
     {
         var rows = new List<UnpaidInvoiceRow>();
 
         try
         {
-            using (SqlCommand command = new SqlCommand("GetAllUnpayedInvoicesByCustomerId", connection, transaction))
+            using (SqlCommand command = ReposHelper.CreateCommand("GetAllUnpayedInvoicesByCustomerId", connection, transaction))
             {
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@CustomerId", customerId);
 
-                using (SqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
 
                     int oProductName = reader.GetOrdinal("ProductName");
@@ -122,7 +122,7 @@ public class InvoiceRepository : IGenericRepository<Invoice>, IInvoiceRepository
                     int oPricePerUnit = reader.GetOrdinal("PricePerUnit");
                     int oIsGift = reader.GetOrdinal("IsGift");
 
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
 
                         rows.Add(new UnpaidInvoiceRow
@@ -162,18 +162,18 @@ public class InvoiceRepository : IGenericRepository<Invoice>, IInvoiceRepository
     /// </summary>
     /// <param name="customerId"></param>
     /// <returns></returns>
-    public ICollection<Invoice> GetInvoicesByCustomerId(int customerId)
+    public async Task<ICollection<Invoice>> GetInvoicesByCustomerId(int customerId)
     {
         List<Invoice> Invoices = new List<Invoice>();
 
-        using (SqlCommand command = new SqlCommand("GetInvoicesByCustomerId", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("GetInvoicesByCustomerId", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@CustomerId", customerId);
 
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
                     Invoices.Add(new Invoice
                     {
@@ -193,11 +193,11 @@ public class InvoiceRepository : IGenericRepository<Invoice>, IInvoiceRepository
         return Invoices;
     }
 
-    public bool Update(Invoice entity)
+    public async Task<bool> Update(Invoice entity)
     {
         int rowAffected = 0;
 
-        using (SqlCommand command = new SqlCommand("UpdateInvoice", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("UpdateInvoice", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -209,7 +209,7 @@ public class InvoiceRepository : IGenericRepository<Invoice>, IInvoiceRepository
             command.Parameters.AddWithValue("@CreatedByUserId", entity.CreatedByUserId);
             command.Parameters.AddWithValue("@Notes", entity.Notes != null ? entity.Notes : DBNull.Value);
 
-            rowAffected = command.ExecuteNonQuery();
+            rowAffected = await command.ExecuteNonQueryAsync();
         }
 
         return rowAffected > 0;

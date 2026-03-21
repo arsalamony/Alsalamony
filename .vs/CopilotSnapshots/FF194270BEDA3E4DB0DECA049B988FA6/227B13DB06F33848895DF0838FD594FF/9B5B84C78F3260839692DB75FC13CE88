@@ -1,0 +1,26 @@
+﻿
+
+using Application.Common.Results;
+using Application.Contracts.Task;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.Generic;
+
+namespace Application.Services.Task;
+
+public interface ITaskServices
+{
+    Task<Result<TaskResponse>> Get(int taskId, CancellationToken cancellationToken = default);
+
+    Task<Result<IEnumerable<TaskResponse>>> GetAll(CancellationToken cancellationToken = default);
+
+    Task<Result<TaskResponse>> Add(int userId, AddTaskRequest request, CancellationToken cancellationToken = default);
+
+    Task<Result> SetComplete(int taskId, int userId, CancellationToken cancellationToken = default);
+
+    Task<Result> SetCancel(int taskId, int userId, string Notes, CancellationToken cancellationToken = default);
+
+    Task<Result> SetNotes(int  taskId, int userId, string Notes, CancellationToken cancellationToken = default);
+
+    Task<Result> Delete(int taskId, CancellationToken cancellationToken = default);
+}

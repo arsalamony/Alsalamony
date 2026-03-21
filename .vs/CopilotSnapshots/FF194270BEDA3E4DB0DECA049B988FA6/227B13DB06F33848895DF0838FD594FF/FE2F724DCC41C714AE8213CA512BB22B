@@ -1,0 +1,22 @@
+﻿using Application.Common.Results;
+using Application.Contracts.User;
+using Microsoft.AspNetCore.Http.HttpResults;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+
+namespace Application.Services.User;
+
+public interface IUserServices
+{
+    Task<Result<UserResponse>> Get(int id, CancellationToken cancellationToken = default);
+
+    Task<Result<IEnumerable<UsersResponse>>> GetUsers(CancellationToken cancellationToken = default);
+    Task<Result<UserResponse>> Add(AddUserRequest request, CancellationToken cancellationToken = default);
+
+    Task<Result> Delete(int id, CancellationToken cancellationToken = default);
+
+    Task<Result> GetLocation(int userId, GetLocationRequest request, CancellationToken cancellationToken = default);
+}

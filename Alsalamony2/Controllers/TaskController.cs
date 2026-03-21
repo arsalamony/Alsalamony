@@ -24,49 +24,49 @@ public class TaskController : ControllerBase
 
     [HttpGet("All")]
     [Authorize]
-    public IActionResult GetAll() 
+    public async Task<IActionResult> GetAll() 
     {
-        var re = taskServices.GetAll();
+        var re = await taskServices.GetAll();
         return re.IsSuccess ? Ok(re.Value) : re.ToProblem();
     }
 
     [HttpGet("Get/{id}")]
     [Authorize]
-    public IActionResult Get(int id) 
+    public async Task<IActionResult> Get(int id) 
     {
-        var re = taskServices.Get(id);
+        var re = await taskServices.Get(id);
         return re.IsSuccess? Ok(re.Value) : re.ToProblem();
     }
 
     [HttpPost("Add")]
     [Authorize]
-    public IActionResult Add([FromBody]AddTaskRequest request) 
+    public async Task<IActionResult> Add([FromBody]AddTaskRequest request) 
     {
-        var re = taskServices.Add(User.GetUserId() ,request);
+        var re = await taskServices.Add(User.GetUserId() ,request);
         return re.IsSuccess ? CreatedAtAction(nameof(Get), new { id = re.Value.TaskId }, re.Value) : re.ToProblem();
     }
 
     [HttpPut("SetComplete/{id}")]
     [Authorize]
-    public IActionResult SetComplete([FromRoute] int id)
+    public async Task<IActionResult> SetComplete([FromRoute] int id)
     {
-        var re = taskServices.SetComplete(id, User.GetUserId());
+        var re = await taskServices.SetComplete(id, User.GetUserId());
         return re.IsSuccess ? NoContent() : re.ToProblem();
     }
 
     [HttpPut("SetCancel/{id}")]
     [Authorize]
-    public IActionResult SetCancel([FromRoute] int id, [FromBody]string Notes)
+    public async Task<IActionResult> SetCancel([FromRoute] int id, [FromBody]string Notes)
     {
-        var re = taskServices.SetCancel(id, User.GetUserId(), Notes);
+        var re = await taskServices.SetCancel(id, User.GetUserId(), Notes);
         return re.IsSuccess ? NoContent() : re.ToProblem();
     }
 
     [HttpDelete("Delete/{id}")]
     [Authorize(Roles ="Admin")]
-    public IActionResult Delete([FromRoute]int id) 
+    public async Task<IActionResult> Delete([FromRoute]int id) 
     {
-        var re = taskServices.Delete(id);
+        var re = await taskServices.Delete(id);
         return re.IsSuccess? NoContent(): re.ToProblem();
     }
 }

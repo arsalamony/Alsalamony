@@ -15,8 +15,9 @@ public class AddressServices : IAddressServices
     }
 
     // correct later
-    public Result<IEnumerable<AddressResponse>> GetAll()
+    public async Task<Result<IEnumerable<AddressResponse>>> GetAll()
     {
+        await unitOfWork.OpenAsync(true);
         var arr = new[]
         {
             new AddressResponse{AddressId = 1, AddressName = "بني عدي"},
@@ -26,7 +27,7 @@ public class AddressServices : IAddressServices
             new AddressResponse{AddressId = 5, AddressName = "المندره"},
             new AddressResponse{AddressId = 6, AddressName = "عزبة عبد الباقي"}
         };
-        
+
         return Result.Success<IEnumerable<AddressResponse>>(arr);
     }
 }

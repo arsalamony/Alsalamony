@@ -23,17 +23,17 @@ public class ProductController : ControllerBase
 
     [Authorize]
     [HttpGet("All")]
-    public IActionResult GetAll() 
+    public async Task<IActionResult> GetAll() 
     {
-        var re = productServices.GetAll();
+        var re = await productServices.GetAll();
         return re.IsSuccess? Ok(re.Value) : re.ToProblem();
     }
 
     [Authorize]
     [HttpPost("Add")]
-    public IActionResult Add(AddProductRequest request) 
+    public async Task<IActionResult> Add(AddProductRequest request) 
     {
-        var re = productServices.Add(request);
+        var re = await productServices.Add(request);
         return re.IsSuccess? NoContent():re.ToProblem();
     }
 }

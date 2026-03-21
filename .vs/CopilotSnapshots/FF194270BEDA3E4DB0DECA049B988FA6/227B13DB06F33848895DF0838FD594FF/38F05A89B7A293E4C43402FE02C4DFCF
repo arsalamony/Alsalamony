@@ -1,0 +1,15 @@
+﻿using Application.Common.Results;
+using Application.Contracts.SystemRecord;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.Generic;
+
+namespace Application.Services.SystemRecord;
+
+public interface ISystemRecordServices
+{
+
+    Task<Result<IEnumerable<SystemRecordsResponse>>> GetAllNotFinished(bool isAdmin, CancellationToken cancellationToken = default);
+
+    Task<Result> Finish(int systemRecordId, CancellationToken cancellationToken = default);
+}

@@ -5,8 +5,10 @@ using Application.Common.Interfaces.Repositories;
 
 public interface IUnitOfWork : IDisposable
 {
-    void Commit();
-    void Rollback();
+    Task Commit();
+    Task Rollback();
+
+    Task OpenAsync(bool WithNoTransaction = true);
     IUserRepository UserRepository { get; }
 
     ICustomerRepository CustomerRepository { get; }

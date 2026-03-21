@@ -1,0 +1,103 @@
+﻿using Application.Common.Errors;
+using Application.Common.Interfaces;
+using Application.Common.Results;
+using Application.Contracts.UserProduct;
+using Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Application.Services.UserProduct;
+
+public class UserProductServices : IUserProductServices
+{
+    private readonly IUnitOfWork unitOfWork;
+
+    public UserProductServices(IUnitOfWork unitOfWork)
+    {
+        this.unitOfWork = unitOfWork;
+    }
+
+    // optimize later
+    public async Task<Result> TransUserProductQuantity(int UserSenderId, UpdateUserProductQuantityRequest request, CancellationToken cancellationToken = default)
+    {
+        await unitOfWork.OpenAsync(false);
+        var userReceiverProduct = (await unitOfWork.UserProductRepository.GetAll(request.UserId))
+            .FirstOrDefault(e => e.UserId == request.UserId && e.ProductId == request.ProductId);
+
+        var userSenderProduct = (await unitOfWork.UserProductRepository.GetAll(UserSenderId))
+            .FirstOrDefault(e => e.UserId == UserSenderId && e.ProductId == request.ProductId);
+
+
+        if (userReceiverProduct == null || userSenderProduct == null)
+            return Result.Failure(UserProductErrors.UserProductNotFound);
+
+        var userSender = await unitOfWork.UserRepository.Find(UserSenderId);
+        var userReceiver = await unitOfWork.UserRepository.Find(request.UserId);
+        var product = await unitOfWork.ProductRepository.Find(request.ProductId);
+        string record = $"استلم {userReceiver.Name} {request.Qty} {product.ProductName} من {userSender.Name}";
+
+        var systemRecord = new Domain.Entities.SystemRecord()
+        {
+            CreatedDate = DateTime.Now,
+            Description = record,
+            Finished = false,
+            Level = 1
+        };
+
+
+        userReceiverProduct.Qty += request.Qty;
+        userSenderProduct.Qty -= request.Qty;
+
+        if (!await unitOfWork.UserProductRepository.Update(userReceiverProduct) ||
+            !await unitOfWork.UserProductRepository.Update(userSenderProduct) ||
+            !await unitOfWork.SystemRecordRepository.Add(systemRecord)
+            )
+        {
+            await unitOfWork.Rollback();
+            return Result.Failure(UserProductErrors.UserProductAddFailed);
+        }
+
+        await unitOfWork.Commit();
+        return Result.Success();
+    }
+
+
+    public async Task<Result> UpdateUserProductQuantity(UpdateUserProductQuantityRequest request, CancellationToken cancellationToken = default)
+    {
+        await unitOfWork.OpenAsync(false);
+        var userProduct = (await unitOfWork.UserProductRepository.GetAll(request.UserId))
+            .FirstOrDefault(e => e.UserId == request.UserId && e.ProductId == request.ProductId);
+
+        var user = await unitOfWork.UserRepository.Find(request.UserId);
+        var product = await unitOfWork.ProductRepository.Find(request.ProductId);
+        if (userProduct == null)
+        {
+            return Result.Failure(UserProductErrors.UserProductNotFound);
+        }
+
+        string t = request.Qty > 0 ? "تزويد" : "تنقيص";
+        string re = $"تم {t} {request.Qty} {product.ProductName} ل {user.Name}";
+        Domain.Entities.SystemRecord record = new Domain.Entities.SystemRecord() 
+        {
+        CreatedDate = DateTime.Now,
+        Description = re,
+        Finished = false,
+        Level = 1,
+        };
+
+        // Update the quantity
+        userProduct.Qty += request.Qty;
+
+        if(!await unitOfWork.UserProductRepository.Update(userProduct) || !await unitOfWork.SystemRecordRepository.Add(record))
+        {
+            await unitOfWork.Rollback();
+            return Result.Failure(UserProductErrors.UserProductAddFailed);
+        }
+
+        await unitOfWork.Commit();
+        return Result.Success();
+    }
+}

@@ -17,9 +17,9 @@ public class InvoiceItemController : ControllerBase
     }
 
     [HttpGet("GetInvoiceItemsByInvoiceId/{invoiceId}")]
-    public IActionResult GetInvoiceItemsByInvoiceId([FromRoute]int invoiceId)
+    public async Task<IActionResult> GetInvoiceItemsByInvoiceId([FromRoute]int invoiceId)
     {
-        var re = invoiceItemSerivces.GetInvoiceItemsByInvoiceId(invoiceId);
+        var re = await invoiceItemSerivces.GetInvoiceItemsByInvoiceId(invoiceId);
         return re.IsSuccess? Ok(re.Value):re.ToProblem();
     }
 }

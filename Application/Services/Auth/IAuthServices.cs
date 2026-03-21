@@ -4,13 +4,14 @@ using Application.Contracts.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.Services.Auth;
 
 public interface IAuthServices
 {
-    Result<AuthResponse> Login(LoginRequest loginRequest);
+    Task<Result<AuthResponse>> Login(LoginRequest loginRequest);
 
-    Result Register(AddUserRequest Request);
+    Task<Result> Register(AddUserRequest Request);
 
 }

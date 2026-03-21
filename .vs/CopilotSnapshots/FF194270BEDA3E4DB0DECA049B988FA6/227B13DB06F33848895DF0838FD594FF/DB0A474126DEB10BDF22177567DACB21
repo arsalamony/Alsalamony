@@ -1,0 +1,16 @@
+﻿using Application.Common.Results;
+using Application.Contracts.Product;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+
+namespace Application.Services.Product;
+
+public interface IProductServices
+{
+    Task<Result<IEnumerable<ProductViewResponse>>> GetAll(CancellationToken cancellationToken = default);
+
+    Task<Result> Add(AddProductRequest request, CancellationToken cancellationToken = default);
+}

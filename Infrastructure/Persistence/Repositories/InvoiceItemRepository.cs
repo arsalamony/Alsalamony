@@ -15,11 +15,11 @@ public class InvoiceItemRepository : IGenericRepository<InvoiceItem>, IInvoiceIt
         this.connection = connection;
         this.transaction = transaction;
     }
-    public bool Add(InvoiceItem entity)
+    public async Task<bool> Add(InvoiceItem entity)
     {
         bool isAdded = false;
 
-        using (SqlCommand command = new SqlCommand("SP_AddInvoiceItem", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_AddInvoiceItem", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -34,7 +34,7 @@ public class InvoiceItemRepository : IGenericRepository<InvoiceItem>, IInvoiceIt
                 Direction = ParameterDirection.Output,
             });
 
-            int rowAffected = command.ExecuteNonQuery();
+            int rowAffected = await command.ExecuteNonQueryAsync();
 
             if (rowAffected == 0)  // this means insert failed
             {
@@ -50,12 +50,12 @@ public class InvoiceItemRepository : IGenericRepository<InvoiceItem>, IInvoiceIt
         return isAdded;
     }
 
-    public bool Delete(int id)
+    public Task<bool> Delete(int id)
     {
         throw new NotImplementedException();
     }
 
-    public InvoiceItem Find(int id)
+    public Task<InvoiceItem> Find(int id)
     {
         throw new NotImplementedException();
         //InvoiceItem InvoiceItem = null;
@@ -101,19 +101,19 @@ public class InvoiceItemRepository : IGenericRepository<InvoiceItem>, IInvoiceIt
         //return InvoiceItem;
     }
 
-    public ICollection<InvoiceItem> GetInvoiceItems(int InvoiceId)
+    public async Task<ICollection<InvoiceItem>> GetInvoiceItems(int InvoiceId)
     {
         List<InvoiceItem> InvoiceItems = new List<InvoiceItem>();
 
-        using (SqlCommand command = new SqlCommand("SP_GetAllInvoiceItems", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_GetAllInvoiceItems", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
             command.Parameters.AddWithValue("@InvoiceId", InvoiceId);
 
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
 
                     InvoiceItems.Add(new InvoiceItem
@@ -132,11 +132,11 @@ public class InvoiceItemRepository : IGenericRepository<InvoiceItem>, IInvoiceIt
         return InvoiceItems;
     }
 
-    public bool Update(InvoiceItem entity)
+    public async Task<bool> Update(InvoiceItem entity)
     {
         int rowAffected = 0;
 
-        using (SqlCommand command = new SqlCommand("UpdateInvoiceItem", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("UpdateInvoiceItem", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -147,7 +147,7 @@ public class InvoiceItemRepository : IGenericRepository<InvoiceItem>, IInvoiceIt
             command.Parameters.AddWithValue("@PricePerUnit", entity.PricePerUnit);
             command.Parameters.AddWithValue("@IsGift", entity.IsGift);
 
-            rowAffected = command.ExecuteNonQuery();
+            rowAffected = await command.ExecuteNonQueryAsync();
         }
 
         return rowAffected > 0;

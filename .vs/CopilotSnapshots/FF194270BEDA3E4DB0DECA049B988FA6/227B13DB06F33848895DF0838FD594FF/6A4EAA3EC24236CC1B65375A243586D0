@@ -1,0 +1,20 @@
+﻿using Application.Common.Results;
+using Application.Contracts.Customer;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.Generic;
+
+namespace Application.Services.Customer;
+
+public interface ICustomerServices
+{
+    Task<Result<IEnumerable<CustomerViewResponse>>> GetAllCustomers(CancellationToken cancellationToken = default);
+
+    Task<Result<CustomerResponse>> Get(int id, CancellationToken cancellationToken = default);
+
+    Task<Result<CustomerResponse>> Add(AddCustomerRequest request, CancellationToken cancellationToken = default);
+
+    Task<Result> Update(int Id, UpdateCustomerRequest request, CancellationToken cancellationToken = default);
+
+    Task<Result> Delete(int Id, CancellationToken cancellationToken = default);
+}

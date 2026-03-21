@@ -1,0 +1,24 @@
+﻿using Application.Common.Interfaces;
+using Application.Common.Results;
+using Application.Contracts.Report;
+
+
+namespace Application.Services.Report;
+
+public class ReportServices : IReportServices
+{
+    private readonly IUnitOfWork unitOfWork;
+
+    public ReportServices(IUnitOfWork unitOfWork)
+    {
+        this.unitOfWork = unitOfWork;
+    }
+
+    public async Task<Result<IEnumerable<DayIncome>>> GetDayIncomeReport(CancellationToken cancellationToken = default)
+    {
+        await unitOfWork.OpenAsync(true);
+        var re = await unitOfWork.ReportRepository.GetDailyIncomeReport();
+
+        return Result.Success(re);
+    }
+}

@@ -16,18 +16,18 @@ public class UserProductRepository : IUserProductRepository
         this.transaction = transaction;
     }
 
-    public UserProduct Find(int UserProductId)
+    public async Task<UserProduct> Find(int UserProductId)
     {
         UserProduct userProduct = null;
 
-        using (SqlCommand command = new SqlCommand("SP_GetUserProductByUserProductId", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_GetUserProductByUserProductId", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@UserProductId", UserProductId);
 
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
 
                     userProduct = new UserProduct
@@ -44,19 +44,19 @@ public class UserProductRepository : IUserProductRepository
         return userProduct;
     }
 
-    public ICollection<UserProduct> GetAll(int UserId)
+    public async Task<ICollection<UserProduct>> GetAll(int UserId)
     {
         List<UserProduct> userProducts = new List<UserProduct>();
 
-        using (SqlCommand command = new SqlCommand("SP_GetAllUserProducts", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_GetAllUserProducts", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
             command.Parameters.AddWithValue("@UserId", UserId);
 
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
 
                     userProducts.Add(new UserProduct
@@ -74,11 +74,11 @@ public class UserProductRepository : IUserProductRepository
         return userProducts;
     }
 
-    public bool Add(UserProduct entity)
+    public async Task<bool> Add(UserProduct entity)
     {
         bool isAdded = false;
 
-        using (SqlCommand command = new SqlCommand("SP_AddUserProduct", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_AddUserProduct", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -90,7 +90,7 @@ public class UserProductRepository : IUserProductRepository
                 Direction = ParameterDirection.Output,
             });
 
-            int rowAffected = command.ExecuteNonQuery();
+            int rowAffected = await command.ExecuteNonQueryAsync();
 
             if (rowAffected == 0)  // this means insert failed
             {
@@ -106,17 +106,17 @@ public class UserProductRepository : IUserProductRepository
         return isAdded;
     }
 
-    public bool Delete(int id)
+    public Task<bool> Delete(int id)
     {
         throw new NotImplementedException();
     }
 
 
-    public bool Update(UserProduct userProduct)
+    public async Task<bool> Update(UserProduct userProduct)
     {
         int rowsAffected = 0;
 
-        using (SqlCommand command = new SqlCommand("SP_UpdateUserProduct", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_UpdateUserProduct", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -125,7 +125,7 @@ public class UserProductRepository : IUserProductRepository
             command.Parameters.AddWithValue("@UserId", userProduct.UserId);
             command.Parameters.AddWithValue("@Qty", userProduct.Qty);
 
-            rowsAffected = command.ExecuteNonQuery();
+            rowsAffected = await command.ExecuteNonQueryAsync();
         }
 
         return rowsAffected > 0;

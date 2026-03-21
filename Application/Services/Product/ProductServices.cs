@@ -15,10 +15,10 @@ public class ProductServices : IProductServices
     {
         this.unitOfWork = unitOfWork;
     }
-
-    public Result<IEnumerable<ProductViewResponse>> GetAll()
+    public async Task<Result<IEnumerable<ProductViewResponse>>> GetAll()
     {
-        var re = unitOfWork.ProductRepository.GetAll();
+        await unitOfWork.OpenAsync(true);
+        var re = await unitOfWork.ProductRepository.GetAll();
 
         var re2 = re.Select(e => new ProductViewResponse()
         {
@@ -29,21 +29,22 @@ public class ProductServices : IProductServices
         return Result.Success(re2);
     }
 
-    public Result Add(AddProductRequest request)
+    public async Task<Result> Add(AddProductRequest request)
     {
+        await unitOfWork.OpenAsync(false);
         var newProduct = new Domain.Entities.Product()
         {
             ProductName = request.ProductName,
             Price = request.Price
         };
 
-        if (!unitOfWork.ProductRepository.Add(newProduct)) 
+        if (!await unitOfWork.ProductRepository.Add(newProduct)) 
         {
-            unitOfWork.Rollback();
+            await unitOfWork.Rollback();
             return Result.Failure(ProductErrors.ProductAddFailed);
         }
 
-        var users = unitOfWork.UserRepository.GetAll();
+        var users = await unitOfWork.UserRepository.GetAll();
 
         foreach (var user in users)
         {
@@ -54,14 +55,14 @@ public class ProductServices : IProductServices
                 Qty = 0
             };
 
-            if (!unitOfWork.UserProductRepository.Add(newUserProduct)) 
+            if (!await unitOfWork.UserProductRepository.Add(newUserProduct)) 
             {
-                unitOfWork.Rollback();
+                await unitOfWork.Rollback();
                 return Result.Failure(ProductErrors.ProductAddFailed);
             }
         }
 
-        unitOfWork.Commit();
+        await unitOfWork.Commit();
         return Result.Success(newProduct);
     }
 }

@@ -24,18 +24,18 @@ public class UserProductController : ControllerBase
 
     [Authorize(Roles = "Admin")]
     [HttpPut("UpdateUserProductQuantity")]
-    public IActionResult UpdateUserProductQuantity(UpdateUserProductQuantityRequest request)
+    public async Task<IActionResult> UpdateUserProductQuantity(UpdateUserProductQuantityRequest request)
     {
-        var result = userProductServices.UpdateUserProductQuantity(request);
+        var result = await userProductServices.UpdateUserProductQuantity(request);
         return result.IsSuccess? NoContent():result.ToProblem();
     }
 
     [Authorize]
     [HttpPut("TransUserProductQuantity")]
-    public IActionResult IncDecUserProductQuantity(UpdateUserProductQuantityRequest request)
+    public async Task<IActionResult> IncDecUserProductQuantity(UpdateUserProductQuantityRequest request)
     {
         int UserId = User.GetUserId();
-        var result = userProductServices.TransUserProductQuantity(UserId ,request);
+        var result = await userProductServices.TransUserProductQuantity(UserId ,request);
         return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 

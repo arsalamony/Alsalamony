@@ -22,9 +22,9 @@ public class ReportController : ControllerBase
 
     [HttpGet("Income")]
     [Authorize(Roles ="Admin")]
-    public IActionResult GetIncomeReport()
+    public async Task<IActionResult> GetIncomeReport()
     {
-        var result = reportServices.GetDayIncomeReport();
+        var result = await reportServices.GetDayIncomeReport();
         return Ok(result.Value);
     }
 

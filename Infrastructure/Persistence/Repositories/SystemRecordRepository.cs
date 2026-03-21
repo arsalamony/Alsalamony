@@ -17,11 +17,11 @@ public class SystemRecordRepository : ISystemRecordRepository
         this.transaction = transaction;
     }
 
-    public bool Add(SystemRecord entity)
+    public async Task<bool> Add(SystemRecord entity)
     {
         bool isAdded = false;
 
-        using (SqlCommand command = new SqlCommand("AddSystemRecord", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("AddSystemRecord", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -35,7 +35,7 @@ public class SystemRecordRepository : ISystemRecordRepository
                 Direction = ParameterDirection.Output,
             });
 
-            int rowAffected = command.ExecuteNonQuery();
+            int rowAffected = await command.ExecuteNonQueryAsync();
 
             if (rowAffected == 0)  // this means insert failed
             {
@@ -52,18 +52,18 @@ public class SystemRecordRepository : ISystemRecordRepository
         return isAdded;
     }
 
-    public bool Delete(int id)
+    public Task<bool> Delete(int id)
     {
         throw new NotImplementedException();
     }
 
-    public SystemRecord Find(int id)
+    public async Task<SystemRecord> Find(int id)
     {
         SystemRecord SystemRecord = null;
 
         string query = "Select * from SystemRecords Where SystemRecordId = @SystemRecordId;";
 
-        using (SqlCommand command = new SqlCommand(query, connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand(query, connection, transaction))
         {
             command.Parameters.AddWithValue("@SystemRecordId", id);
             using (SqlDataReader reader = command.ExecuteReader())
@@ -88,15 +88,14 @@ public class SystemRecordRepository : ISystemRecordRepository
         return SystemRecord;
     }
 
-    public IEnumerable<SystemRecord> GetAll()
+    public async Task<IEnumerable<SystemRecord>> GetAll()
     {
         List<SystemRecord> rs = new List<SystemRecord>();
-
-        using (SqlCommand command = new SqlCommand("Select * from SystemRecords Order by SystemRecordId desc;", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("Select * from SystemRecords Order by SystemRecordId desc;", connection, transaction))
         {
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
                     rs.Add(new SystemRecord
                     {
@@ -113,11 +112,11 @@ public class SystemRecordRepository : ISystemRecordRepository
         return rs;
     }
 
-    public bool Update(SystemRecord entity)
+    public async Task<bool> Update(SystemRecord entity)
     {
         int rowAffected = 0;
 
-        using (SqlCommand command = new SqlCommand("UpdateSystemRecord", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("UpdateSystemRecord", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -127,7 +126,7 @@ public class SystemRecordRepository : ISystemRecordRepository
             command.Parameters.AddWithValue("@Finished", entity.Finished);
             command.Parameters.AddWithValue("@CreatedDate", entity.CreatedDate);
 
-            rowAffected = command.ExecuteNonQuery();
+            rowAffected = await command.ExecuteNonQueryAsync();
         }
 
         return rowAffected > 0;

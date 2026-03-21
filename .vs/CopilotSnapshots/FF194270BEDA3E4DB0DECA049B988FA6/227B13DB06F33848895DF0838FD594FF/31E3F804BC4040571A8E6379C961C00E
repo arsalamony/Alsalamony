@@ -1,0 +1,16 @@
+﻿using Application.Common.Results;
+using Application.Contracts.UserProduct;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+
+namespace Application.Services.UserProduct;
+
+public interface IUserProductServices
+{
+    Task<Result> UpdateUserProductQuantity(UpdateUserProductQuantityRequest request, CancellationToken cancellationToken = default);
+
+    Task<Result> TransUserProductQuantity(int UserSenderId, UpdateUserProductQuantityRequest request, CancellationToken cancellationToken = default);
+}

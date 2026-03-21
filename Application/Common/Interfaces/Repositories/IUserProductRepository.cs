@@ -1,11 +1,10 @@
 ﻿using Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.Common.Interfaces.Repositories;
 
 public interface IUserProductRepository : IGenericRepository<UserProduct>
 {
-    ICollection<UserProduct> GetAll(int UserId);
+    Task<ICollection<UserProduct>> GetAll(int UserId);
 }

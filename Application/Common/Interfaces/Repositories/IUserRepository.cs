@@ -7,8 +7,8 @@ namespace Application.Common.Interfaces.Repositories
 {
     public interface IUserRepository : IGenericRepository<User>
     {
-        User Find(string UserName);
+        Task<User> Find(string UserName);
 
-        IEnumerable<User> GetAll();
+        Task<IEnumerable<User>> GetAll();
     }
 }

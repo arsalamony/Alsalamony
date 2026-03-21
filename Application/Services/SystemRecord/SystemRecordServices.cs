@@ -3,7 +3,6 @@ using Application.Common.Interfaces;
 using Application.Common.Results;
 using Application.Contracts.SystemRecord;
 
-
 namespace Application.Services.SystemRecord;
 
 public class SystemRecordServices : ISystemRecordServices
@@ -15,25 +14,27 @@ public class SystemRecordServices : ISystemRecordServices
         this.unitOfWork = unitOfWork;
     }
 
-    public Result Finish(int systemRecordId)
+    public async Task<Result> Finish(int systemRecordId)
     {
-        var sr = unitOfWork.SystemRecordRepository.Find(systemRecordId);
+        await unitOfWork.OpenAsync(false);
+        var sr = await unitOfWork.SystemRecordRepository.Find(systemRecordId);
 
         if(sr is null)
             return Result.Failure(SystemRecordErrors.SystemRecordNotFound);
 
         sr.Finished = true;
 
-        if (!unitOfWork.SystemRecordRepository.Update(sr))
+        if (!await unitOfWork.SystemRecordRepository.Update(sr))
             return Result.Failure(SystemRecordErrors.SystemRecordUpdateFailed);
 
-        unitOfWork.Commit();
+        await unitOfWork.Commit();
         return Result.Success();
     }
 
-    public Result<IEnumerable<SystemRecordsResponse>> GetAllNotFinished(bool isAdmin)
+    public async Task<Result<IEnumerable<SystemRecordsResponse>>> GetAllNotFinished(bool isAdmin)
     {
-        var sRs = unitOfWork.SystemRecordRepository.GetAll().ToList();
+        await unitOfWork.OpenAsync(true);
+        var sRs = (await unitOfWork.SystemRecordRepository.GetAll()).ToList();
 
         List<SystemRecordsResponse> r = new List<SystemRecordsResponse>();
         if(isAdmin)

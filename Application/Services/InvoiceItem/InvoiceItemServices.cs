@@ -14,13 +14,14 @@ public class InvoiceItemServices : IInvoiceItemSerivces
         this.unitOfWork = unitOfWork;
     }
 
-    public Result<IEnumerable<InvoiceItemResponse>> GetInvoiceItemsByInvoiceId(int invoiceId)
+    public async Task<Result<IEnumerable<InvoiceItemResponse>>> GetInvoiceItemsByInvoiceId(int invoiceId)
     {
-        var invoiceItems = unitOfWork.InvoiceItemRepository.GetInvoiceItems(invoiceId);
+        await unitOfWork.OpenAsync(true);
+        var invoiceItems = await unitOfWork.InvoiceItemRepository.GetInvoiceItems(invoiceId);
 
         var invoiceItemResponses = invoiceItems.Select(i =>
         {
-            i.Product = unitOfWork.ProductRepository.Find(i.ProductId);
+            i.Product = unitOfWork.ProductRepository.Find(i.ProductId).GetAwaiter().GetResult();
             return new InvoiceItemResponse
             {
                 ProductName = i.Product.ProductName,

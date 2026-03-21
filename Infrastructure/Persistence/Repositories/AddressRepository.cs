@@ -14,21 +14,21 @@ public class AddressRepository : IAddressRepository
         this.connection = connection;
         this.transaction = transaction;
     }
-    public bool Add(Address entity)
+    public Task<bool> Add(Address entity)
     {
         throw new NotImplementedException();
     }
 
-    public bool Delete(int id)
+    public Task<bool> Delete(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Address Find(int id)
+    public async Task<Address> Find(int id)
     {
         Address Address = null;
 
-        using (SqlCommand command = new SqlCommand("Select * from Addresses where AddressId = @AddressId;", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("Select * from Addresses where AddressId = @AddressId;", connection, transaction))
         {
             command.Parameters.AddWithValue("@AddressId", id);
             using (SqlDataReader reader = command.ExecuteReader())
@@ -50,7 +50,7 @@ public class AddressRepository : IAddressRepository
         return Address;
     }
 
-    public bool Update(Address entity)
+    public Task<bool> Update(Address entity)
     {
         throw new NotImplementedException();
     }

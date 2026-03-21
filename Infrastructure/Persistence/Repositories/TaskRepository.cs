@@ -18,18 +18,18 @@ public class TaskRepository : ITaskRepository
         this.transaction = transaction;
     }
 
-    public IEnumerable<TaskResponse> GetAll()
+    public async Task<IEnumerable<TaskResponse>> GetAll()
     {
         List<TaskResponse> tasks = new List<TaskResponse>();
 
-        using (SqlCommand command = new SqlCommand("SP_GetAllTasks", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_GetAllTasks", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
 
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
                     tasks.Add(new TaskResponse
                     {
@@ -56,18 +56,18 @@ public class TaskRepository : ITaskRepository
         return tasks;
     }
 
-    public Task Find(int id)
+    public async Task<Task> Find(int id)
     {
         Task? task = null;
 
-        using (SqlCommand command = new SqlCommand("SP_GetTaskById", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_GetTaskById", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@TaskId", id);
 
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                if (reader.Read())
+                if (await reader.ReadAsync())
                 {
                     int ordTaskId = reader.GetOrdinal("TaskId");
                     int ordName = reader.GetOrdinal("Name");
@@ -123,11 +123,11 @@ public class TaskRepository : ITaskRepository
         return task;
     }
 
-    public bool Add(Task entity)
+    public async Task<bool> Add(Task entity)
     {
         bool isAdded = false;
 
-        using (SqlCommand command = new SqlCommand("SP_AddTask", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_AddTask", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -152,7 +152,7 @@ public class TaskRepository : ITaskRepository
                 Direction = ParameterDirection.Output
             });
 
-            command.ExecuteNonQuery();
+            await command.ExecuteNonQueryAsync();
 
             entity.TaskId = (int)command.Parameters["@TaskId"].Value;
             isAdded = entity.TaskId > 0;
@@ -161,10 +161,10 @@ public class TaskRepository : ITaskRepository
         return isAdded;
     }
 
-    public bool Update(Task entity)
+    public async Task<bool> Update(Task entity)
     {
 
-        using (SqlCommand command = new SqlCommand("SP_UpdateTask", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_UpdateTask", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -193,23 +193,23 @@ public class TaskRepository : ITaskRepository
                 (object?)entity.Notes ?? DBNull.Value);
 
             // لو SP_UpdateTask بيرجع SELECT RowsAffected
-            int rows = command.ExecuteNonQuery();
+            int rows = await command.ExecuteNonQueryAsync();
 
             return rows > 0;
         }
 
     }
 
-    public bool Delete(int id)
+    public async Task<bool> Delete(int id)
     {
 
-        using (SqlCommand command = new SqlCommand("SP_DeleteTask", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_DeleteTask", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@TaskId", id);
 
             // لو SP_DeleteTask بيرجع SELECT RowsAffected
-            object? result = command.ExecuteScalar();
+            object? result = await command.ExecuteScalarAsync();
             int rows = (result == null || result == DBNull.Value) ? 0 : Convert.ToInt32(result);
 
             return rows > 0;

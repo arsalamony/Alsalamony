@@ -21,16 +21,16 @@ public class ReportRepository : IReportRepository
         this.transaction = transaction;
     }
 
-    public IEnumerable<DayIncome> GetDailyIncomeReport()
+    public async Task<IEnumerable<DayIncome>> GetDailyIncomeReport()
     {
         List<DayIncome> DayIncomes = new List<DayIncome>();
 
-        using (SqlCommand command = new SqlCommand("SP_MonthlyIncomeReport", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_MonthlyIncomeReport", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
                     // The record was found
                     DayIncomes.Add(new DayIncome

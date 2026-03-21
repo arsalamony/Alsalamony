@@ -23,17 +23,17 @@ public class SystemRecordController : ControllerBase
 
     [HttpGet("All")]
     [Authorize]
-    public IActionResult GetAll() 
+    public async Task<IActionResult> GetAll() 
     {
-        var re = systemRecordServices.GetAllNotFinished(User.IsAdmin());
+        var re = await systemRecordServices.GetAllNotFinished(User.IsAdmin());
         return re.IsSuccess? Ok(re.Value) : re.ToProblem();
     }
 
     [HttpPut("Finish/{id}")]
     [Authorize(Roles = "Admin")]
-    public IActionResult Finish([FromRoute] int id) 
+    public async Task<IActionResult> Finish([FromRoute] int id) 
     {
-        var re = systemRecordServices.Finish(id);
+        var re = await systemRecordServices.Finish(id);
         return re.IsSuccess ? NoContent() : re.ToProblem();
     }
 }

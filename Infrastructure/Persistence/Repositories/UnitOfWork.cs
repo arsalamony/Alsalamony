@@ -10,15 +10,14 @@ namespace Infrastructure.Persistence.Repositories;
 public class UnitOfWork : IUnitOfWork
 {
     SqlConnection _connection;
-    SqlTransaction _transaction;
+    SqlTransaction? _transaction;
+    private readonly string conStr;
 
     public UnitOfWork(string ConStr)
     {
         _connection = new SqlConnection(ConStr);
-        _connection.Open();
-
-        _transaction = _connection.BeginTransaction();
-
+        _transaction = null;
+        conStr = ConStr;
     }
 
     public IUserRepository UserRepository => new UserRepository(_connection, _transaction);
@@ -43,20 +42,35 @@ public class UnitOfWork : IUnitOfWork
 
     public IReportRepository ReportRepository => new ReportRepository(_connection, _transaction);
 
-    public void Commit()
+    public async Task OpenAsync(bool WithNoTransaction = true)
     {
-        _transaction.Commit();
-        _connection.Close();
-        _connection.Dispose();
-        _transaction.Dispose();
+        _connection = new SqlConnection(conStr);
+        await _connection.OpenAsync();
+
+        if (WithNoTransaction)
+            return;
+
+        _transaction = _connection.BeginTransaction();
     }
 
-    public void Rollback()
+    public async Task Commit()
     {
-        _transaction.Rollback();
-        _connection.Close();
-        _connection.Dispose();
-        _transaction.Dispose();
+        if(_transaction != null)
+            await _transaction?.CommitAsync();
+        await _connection.CloseAsync();
+        await _connection.DisposeAsync();
+        if (_transaction != null)
+            await _transaction.DisposeAsync();
+    }
+
+    public async Task Rollback()
+    {
+        if(_transaction != null)
+            await _transaction?.RollbackAsync();
+        await _connection.CloseAsync();
+        await _connection.DisposeAsync();
+        if (_transaction != null)
+            await _transaction.DisposeAsync();
     }
 
     public void Dispose()
@@ -65,5 +79,6 @@ public class UnitOfWork : IUnitOfWork
         _connection?.Dispose();
         _transaction?.Dispose();
     }
+
 
 }

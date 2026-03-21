@@ -1,0 +1,201 @@
+﻿using Application.Common.Errors;
+using Application.Common.Interfaces;
+using Application.Common.Results;
+using Application.Contracts.Task;
+using Domain.Entities;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Linq;
+
+namespace Application.Services.Task;
+
+public class TaskServices : ITaskServices
+{
+    private readonly IUnitOfWork unitOfWork;
+
+    public TaskServices(IUnitOfWork unitOfWork)
+    {
+        this.unitOfWork = unitOfWork;
+    }
+
+
+    public async Task<Result<IEnumerable<TaskResponse>>> GetAll(CancellationToken cancellationToken = default)
+    {
+        await unitOfWork.OpenAsync(true);
+        var tasks = await unitOfWork.TaskRepository.GetAll();
+
+        return Result.Success(tasks);
+    }
+
+    public async Task<Result<TaskResponse>> Get(int taskId, CancellationToken cancellationToken = default)
+    {
+
+        var task = await unitOfWork.TaskRepository.Find(taskId);
+
+        if (task == null) return Result.Failure<TaskResponse>(TaskErrors.TaskNotFound);
+
+
+        task.Address = await unitOfWork.AddressRepository.Find(task.AddressId);
+        task.CreatedByUser = await unitOfWork.UserRepository.Find(task.CreatedByUserId);
+        task.AssignedToUser = task.AssignedToUserId is null ? null : await unitOfWork.UserRepository.Find((int)task.AssignedToUserId);
+        task.CompletedByUser = task.CompletedByUserId is null ? null : await unitOfWork.UserRepository.Find((int)task.CompletedByUserId);
+
+
+        var res = new TaskResponse() 
+        {
+            Notes = task.Notes,
+            Name = task.Name,
+            TaskId = taskId,
+            CreatedAt = task.CreatedAt,
+            CompletedAt = task.CompletedAt,
+            UpdatedAt = task.UpdatedAt,
+            AddressName = task.Address.AddressName,
+            Priority = task.Priority.ToString(),
+            Status = task.Status.ToString(),
+            AssignedTo = task.AssignedToUser?.Name,
+            CreatedBy = task.CreatedByUser.Name,
+            CompletedBy = task.CompletedByUser?.Name,
+            AssignedToUserId = task.AssignedToUserId,
+            CompletedByUserId = task.CompletedByUserId,
+            CreatedByUserId = task.CreatedByUserId,
+        };
+
+        return Result.Success(res);
+    }
+
+    public async Task<Result<TaskResponse>> Add(int userId, AddTaskRequest request, CancellationToken cancellationToken = default)
+    {
+        await unitOfWork.OpenAsync(false);
+        var newTask = new Domain.Entities.Task() 
+        {
+            AddressId = request.AddressId,
+            CreatedAt = DateTime.Now,
+            Name = request.Name,
+            AssignedToUserId = request.AssignedToUserId,
+            CreatedByUserId = userId,
+            Priority = request.Priority,
+            Status = Domain.Enums.enTaskStatus.New,
+            Notes = request.Notes,
+            CompletedAt = null,
+            CompletedByUserId = null,
+            UpdatedAt = null,     
+            
+        };
+
+        if (!await unitOfWork.TaskRepository.Add(newTask)) 
+        {
+            await unitOfWork.Rollback();
+            return Result.Failure<TaskResponse>(TaskErrors.TaskAddFailed);
+        }
+
+
+
+        newTask.Address = await unitOfWork.AddressRepository.Find(newTask.AddressId);
+        newTask.CreatedByUser = await unitOfWork.UserRepository.Find(newTask.CreatedByUserId);
+        newTask.AssignedToUser = newTask.AssignedToUserId is null ? null : await unitOfWork.UserRepository.Find((int)newTask.AssignedToUserId);
+        newTask.CompletedByUser = newTask.CompletedByUserId is null ? null : await unitOfWork.UserRepository.Find((int)newTask.CompletedByUserId);
+
+
+        var res = new TaskResponse()
+        {
+            Notes = newTask.Notes,
+            Name = newTask.Name,
+            TaskId = newTask.TaskId,
+            CreatedAt = newTask.CreatedAt,
+            CompletedAt = newTask.CompletedAt,
+            UpdatedAt = newTask.UpdatedAt,
+            AddressName = newTask.Address.AddressName,
+            Priority = newTask.Priority.ToString(),
+            Status = newTask.Status.ToString(),
+            AssignedTo = newTask.AssignedToUser?.Name,
+            CreatedBy = newTask.CreatedByUser.Name,
+            CompletedBy = newTask.CompletedByUser?.Name,
+            AssignedToUserId = newTask.AssignedToUserId,
+            CompletedByUserId = newTask.CompletedByUserId,
+            CreatedByUserId = newTask.CreatedByUserId,
+        };
+
+
+        await unitOfWork.Commit();
+        return Result.Success(res);
+    }
+
+    public async Task<Result> SetComplete(int taskId, int userId, CancellationToken cancellationToken = default)
+    {
+        await unitOfWork.OpenAsync(false);
+        var t = await unitOfWork.TaskRepository.Find(taskId);
+        if (t is null)
+            return Result.Failure(TaskErrors.TaskNotFound);
+
+
+        t.Status = Domain.Enums.enTaskStatus.Done;
+        t.CompletedByUserId = userId;
+        t.CompletedAt = DateTime.Now;
+        t.UpdatedAt = DateTime.Now;
+
+        if (!await unitOfWork.TaskRepository.Update(t)) 
+        {
+            await unitOfWork.Rollback();
+            return Result.Failure(TaskErrors.TaskAddFailed);
+        }
+
+        await unitOfWork.Commit();
+        return Result.Success();
+    }
+
+    public async Task<Result> SetCancel(int taskId, int userId, string Notes, CancellationToken cancellationToken = default)
+    {
+        await unitOfWork.OpenAsync(false);
+        var t = await unitOfWork.TaskRepository.Find(taskId);
+        if (t is null)
+            return Result.Failure(TaskErrors.TaskNotFound);
+
+
+        t.Status = Domain.Enums.enTaskStatus.Canceled;
+        t.CompletedByUserId = userId;
+        t.CompletedAt = DateTime.Now;
+        t.UpdatedAt = DateTime.Now;
+        t.Notes = Notes;
+
+        if (!await unitOfWork.TaskRepository.Update(t))
+        {
+            await unitOfWork.Rollback();
+            return Result.Failure(TaskErrors.TaskAddFailed);
+        }
+
+        await unitOfWork.Commit();
+        return Result.Success();
+    }
+
+    public async Task<Result> SetNotes(int taskId, int userId, string Notes, CancellationToken cancellationToken = default)
+    {
+        await unitOfWork.OpenAsync(false);
+        var t = await unitOfWork.TaskRepository.Find(taskId);
+        if (t is null)
+            return Result.Failure(TaskErrors.TaskNotFound);
+
+
+        t.Status = Domain.Enums.enTaskStatus.InProgress;
+        t.UpdatedAt = DateTime.Now;
+        t.Notes = Notes;
+
+        if (!await unitOfWork.TaskRepository.Update(t))
+        {
+            await unitOfWork.Rollback();
+            return Result.Failure(TaskErrors.TaskAddFailed);
+        }
+
+        await unitOfWork.Commit();
+        return Result.Success();
+    }
+
+    // write checks later
+    public async Task<Result> Delete(int taskId, CancellationToken cancellationToken = default)
+    {
+        await unitOfWork.OpenAsync(false);
+        var r = await unitOfWork.TaskRepository.Delete(taskId);
+
+        await unitOfWork.Commit();
+        return Result.Success();
+    }
+}

@@ -3,6 +3,8 @@ using Application.Contracts.Customer;
 using Domain.Entities;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Repositories
 {
@@ -18,17 +20,17 @@ namespace Infrastructure.Persistence.Repositories
             this.transaction = transaction;
         }
 
-        public IEnumerable<CustomerViewResponse> GetAllCustomers()
+        public async Task<IEnumerable<CustomerViewResponse>> GetAllCustomers()
         {
             List<CustomerViewResponse> customers = new List<CustomerViewResponse>();
 
-            using (SqlCommand command = new SqlCommand("SP_GetAllCustomers", connection, transaction))
+            using (SqlCommand command = ReposHelper.CreateCommand("SP_GetAllCustomers", connection, transaction))
             {
                 command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                using (SqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
                         customers.Add(new CustomerViewResponse
                         {
@@ -45,11 +47,11 @@ namespace Infrastructure.Persistence.Repositories
             return customers;
         }
 
-        public bool Add(Customer entity)
+        public async Task<bool> Add(Customer entity)
         {
             bool isAdded = false;
 
-            using (SqlCommand command = new SqlCommand("SP_AddCustomer", connection, transaction))
+            using (SqlCommand command = ReposHelper.CreateCommand("SP_AddCustomer", connection, transaction))
             {
                 command.CommandType = CommandType.StoredProcedure;
 
@@ -61,7 +63,7 @@ namespace Infrastructure.Persistence.Repositories
                     Direction = ParameterDirection.Output,
                 });
 
-                int rowAffected = command.ExecuteNonQuery();
+                int rowAffected = await command.ExecuteNonQueryAsync();
 
                 if (rowAffected == 0)  // this means insert failed
                 {
@@ -77,17 +79,17 @@ namespace Infrastructure.Persistence.Repositories
             return isAdded;
         }
 
-        public Customer Find(int id)
+        public async Task<Customer> Find(int id)
         {
             Customer Customer = null;
 
-            using (SqlCommand command = new SqlCommand("SP_GetCustomerById", connection, transaction))
+            using (SqlCommand command = ReposHelper.CreateCommand("SP_GetCustomerById", connection, transaction))
             {
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@CustomerId", id);
-                using (SqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
-                    if (reader.Read())
+                    if (await reader.ReadAsync())
                     {
                         // The record was found
                         Customer = new Customer
@@ -106,11 +108,11 @@ namespace Infrastructure.Persistence.Repositories
             return Customer;
         }
 
-        public bool Update(Customer entity)
+        public async Task<bool> Update(Customer entity)
         {
             int rowAffected = 0;
 
-            using (SqlCommand command = new SqlCommand("SP_UpdateCustomer", connection, transaction))
+            using (SqlCommand command = ReposHelper.CreateCommand("SP_UpdateCustomer", connection, transaction))
             {
                 command.CommandType = CommandType.StoredProcedure;
 
@@ -119,24 +121,24 @@ namespace Infrastructure.Persistence.Repositories
                 command.Parameters.AddWithValue("@Phone", entity.Phone);
                 command.Parameters.AddWithValue("@AddressId", entity.AddressId);
 
-                rowAffected = command.ExecuteNonQuery();
+                rowAffected = await command.ExecuteNonQueryAsync();
             }
 
             return rowAffected > 0;
         }
 
-        public bool Delete(int Id)
+        public async Task<bool> Delete(int Id)
         {
             int rowAffected = 0;
 
-            using (SqlCommand command = new SqlCommand("SP_DeleteCustomer", connection, transaction))
+            using (SqlCommand command = ReposHelper.CreateCommand("SP_DeleteCustomer", connection, transaction))
             {
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddWithValue("@CustomerId", Id);
 
 
-                rowAffected = command.ExecuteNonQuery();
+                rowAffected = await command.ExecuteNonQueryAsync();
             }
 
             return rowAffected > 0;

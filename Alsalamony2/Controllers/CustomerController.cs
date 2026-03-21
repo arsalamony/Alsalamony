@@ -24,44 +24,43 @@ public class CustomerController : ControllerBase
 
     [Authorize]
     [HttpGet("All")]
-    public IActionResult GetAllCustomers()
+    public async Task<IActionResult> GetAllCustomers()
     {
-
-        return Ok(Customer.GetAllCustomers().Value);
+        var result = await Customer.GetAllCustomers();
+        return Ok(result.Value);
     }
 
 
     [Authorize]
     [HttpGet("Get/{id}")]
-    public IActionResult Get([FromRoute] int id)
+    public async Task<IActionResult> Get([FromRoute] int id)
     {
-        var result = Customer.Get(id);
+        var result = await Customer.Get(id);
         return result.IsSuccess? Ok(result.Value):result.ToProblem();
     }
 
     [Authorize]
     [HttpPost("Add")]
-    public IActionResult Add(AddCustomerRequest request)
+    public async Task<IActionResult> Add(AddCustomerRequest request)
     {
-        var result = Customer.Add(request);
+        var result = await Customer.Add(request);
         return result.IsSuccess? CreatedAtAction(nameof(Get), new {id = result.Value.Id}, result.Value) : result.ToProblem();
     }
 
     [Authorize]
     [HttpPut("Update/{id}")]
-    public IActionResult Update([FromRoute] int id, UpdateCustomerRequest request)
+    public async Task<IActionResult> Update([FromRoute] int id, UpdateCustomerRequest request)
     {
-        
-        var result = Customer.Update(id, request);
+        var result = await Customer.Update(id, request);
 
         return result.IsSuccess? NoContent():result.ToProblem();
     }
 
     [Authorize(Roles ="Admin")]
     [HttpDelete("Delete")]
-    public IActionResult Delete([FromQuery] int id)
+    public async Task<IActionResult> Delete([FromQuery] int id)
     {
-        var result = Customer.Delete(id);
+        var result = await Customer.Delete(id);
         return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 }

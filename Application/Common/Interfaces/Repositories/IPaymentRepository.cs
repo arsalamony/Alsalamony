@@ -1,16 +1,15 @@
 ﻿using Application.Contracts.Payment;
 using Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.Common.Interfaces.Repositories;
 
 public interface IPaymentRepository : IGenericRepository<Payment>
 {
-    IEnumerable<Payment> GetAll();
-    IEnumerable<PaymentViewResponse> GetAllPaged(int PageNo, int RowsNo);
-    IEnumerable<Payment> GetAll(int InvoiceId);
+    Task<IEnumerable<Payment>> GetAll();
+    Task<IEnumerable<PaymentViewResponse>> GetAllPaged(int PageNo, int RowsNo);
+    Task<IEnumerable<Payment>> GetAll(int InvoiceId);
 
-    int GetPaymentNo();
+    Task<int> GetPaymentNo();
 }

@@ -3,6 +3,8 @@ using Domain.Entities;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Text;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Repositories;
 
@@ -18,19 +20,18 @@ public class UserRepository : IUserRepository
         this.transaction = transaction;
     }
 
-    public IEnumerable<User> GetAll()
+    public async Task<IEnumerable<User>> GetAll()
     {
         List<User> userProducts = new List<User>();
-
-        using (SqlCommand command = new SqlCommand("GetAllUsers", connection, transaction))
+        
+        using (SqlCommand command = ReposHelper.CreateCommand("GetAllUsers", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
-
                     userProducts.Add(new User
                     {
                         UserId = Convert.ToInt32(reader["UserId"]),
@@ -49,18 +50,18 @@ public class UserRepository : IUserRepository
 
         return userProducts;
     }
-    public User Find(int userId)
+    public async Task<User> Find(int userId)
     {
         User user = null;
-
-        using (SqlCommand command = new SqlCommand("SP_GetUserByUserId", connection, transaction))
+        
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_GetUserByUserId", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@UserId", userId);
 
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                if (reader.Read())
+                if (await reader.ReadAsync())
                 {
                     // The record was found
                     user = new User();
@@ -82,17 +83,17 @@ public class UserRepository : IUserRepository
         return user;
     }
 
-    public User Find(string UserName)
+    public async Task<User> Find(string UserName)
     {
         User user = null;
 
-        using (SqlCommand command = new SqlCommand("SP_GetUserByUsername", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_GetUserByUsername", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@Username", UserName);
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
-                if (reader.Read())
+                if (await reader.ReadAsync())
                 {
                     // The record was found
                     user = new User
@@ -109,14 +110,15 @@ public class UserRepository : IUserRepository
                 }
             }
         }
+
         return user;
     }
 
-    public bool Add(User entity)
+    public async Task<bool> Add(User entity)
     {
         bool isAdded = false;
 
-        using (SqlCommand command = new SqlCommand("AddUser", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("AddUser", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -139,7 +141,7 @@ public class UserRepository : IUserRepository
                 Direction = ParameterDirection.Output,
             });
 
-            int rowAffected = command.ExecuteNonQuery();
+            int rowAffected = await command.ExecuteNonQueryAsync();
 
             if (rowAffected == 0)  // this means insert failed
             {
@@ -154,11 +156,11 @@ public class UserRepository : IUserRepository
 
         return isAdded;
     }
-    public bool Update(User entity)
+    public async Task<bool> Update(User entity)
     {
         int rowAffected = 0;
 
-        using (SqlCommand command = new SqlCommand("SP_UpdateUser", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_UpdateUser", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -171,24 +173,23 @@ public class UserRepository : IUserRepository
             command.Parameters.AddWithValue("@Longitude", (object?)entity.Longitude ?? DBNull.Value);
             command.Parameters.AddWithValue("@DateOfLastLocation", (object?)entity.DateOfLastLocation ?? DBNull.Value);
 
-            rowAffected = command.ExecuteNonQuery();
+            rowAffected = await command.ExecuteNonQueryAsync();
         }
 
         return rowAffected > 0;
     }
 
-    public bool Delete(int Id)
+    public async Task<bool> Delete(int Id)
     {
         int rowAffected = 0;
 
-        using (SqlCommand command = new SqlCommand("SP_DeleteUser", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_DeleteUser", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
             command.Parameters.AddWithValue("@UserId", Id);
 
-
-            rowAffected = command.ExecuteNonQuery();
+            rowAffected = await command.ExecuteNonQueryAsync();
         }
 
         return rowAffected > 0;

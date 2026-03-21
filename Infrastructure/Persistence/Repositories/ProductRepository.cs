@@ -16,11 +16,11 @@ public class ProductRepository : IProductRepository
         this.transaction = transaction;
     }
 
-    public IEnumerable<Product> GetAll()
+    public async Task<IEnumerable<Product>> GetAll()
     {
         List<Product> Products = new List<Product>();
 
-        using (SqlCommand command = new SqlCommand("SP_GetAllProducts", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_GetAllProducts", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
             using (SqlDataReader reader = command.ExecuteReader())
@@ -42,11 +42,11 @@ public class ProductRepository : IProductRepository
 
         return Products;
     }
-    public Product Find(int id)
+    public async Task<Product> Find(int id)
     {
         Product Product = null;
 
-        using (SqlCommand command = new SqlCommand("SP_GetProductById", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_GetProductById", connection, transaction))
         {
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@ProductId", id);
@@ -70,11 +70,11 @@ public class ProductRepository : IProductRepository
         return Product;
     }
 
-    public bool Add(Product entity)
+    public async Task<bool> Add(Product entity)
     {
         bool isAdded = false;
 
-        using (SqlCommand command = new SqlCommand("SP_AddProduct", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_AddProduct", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -85,7 +85,7 @@ public class ProductRepository : IProductRepository
                 Direction = ParameterDirection.Output,
             });
 
-            int rowAffected = command.ExecuteNonQuery();
+            int rowAffected = await command.ExecuteNonQueryAsync();
 
             if (rowAffected == 0)  // this means insert failed
             {
@@ -101,28 +101,28 @@ public class ProductRepository : IProductRepository
         return isAdded;
     }
 
-    public bool Delete(int Id)
+    public async Task<bool> Delete(int Id)
     {
         int rowAffected = 0;
 
-        using (SqlCommand command = new SqlCommand("SP_DeleteProduct", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_DeleteProduct", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
             command.Parameters.AddWithValue("@ProductId", Id);
 
 
-            rowAffected = command.ExecuteNonQuery();
+            rowAffected = await command.ExecuteNonQueryAsync();
         }
 
         return rowAffected > 0;
     }
 
-    public bool Update(Product entity)
+    public async Task<bool> Update(Product entity)
     {
         int rowAffected = 0;
 
-        using (SqlCommand command = new SqlCommand("SP_UpdateProduct", connection, transaction))
+        using (SqlCommand command = ReposHelper.CreateCommand("SP_UpdateProduct", connection, transaction))
         {
             command.CommandType = CommandType.StoredProcedure;
 
@@ -130,7 +130,7 @@ public class ProductRepository : IProductRepository
             command.Parameters.AddWithValue("@ProductName", entity.ProductName);
             command.Parameters.AddWithValue("@Price", entity.Price);
 
-            rowAffected = command.ExecuteNonQuery();
+            rowAffected = await command.ExecuteNonQueryAsync();
         }
 
         return rowAffected > 0;

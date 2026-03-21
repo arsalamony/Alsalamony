@@ -23,9 +23,9 @@ public class AddressController : ControllerBase
 
     [HttpGet("All")]
 
-    public IActionResult GetAll() 
+    public async Task<IActionResult> GetAll() 
     {
-        var result = this.addressServices.GetAll();
+        var result = await addressServices.GetAll();
 
         return result.IsSuccess? Ok(result.Value) : result.ToProblem();
     }

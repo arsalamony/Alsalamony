@@ -25,19 +25,19 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("Login")]
-    public IActionResult Login([FromBody] LoginRequest request)
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         _logger.LogInformation("Logging with email: {Username}", request.Username);
 
-        var result = authServices.Login(request);
+        var result = await authServices.Login(request);
         return result.IsSuccess? Ok(result.Value) : result.ToProblem();
     }
 
     [Authorize(Roles ="Admin")]
     [HttpPost("Register")]
-    public IActionResult Register([FromBody] AddUserRequest request)
+    public async Task<IActionResult> Register([FromBody] AddUserRequest request)
     {
-        var re = authServices.Register(request);
+        var re = await authServices.Register(request);
         return re.IsSuccess? NoContent():re.ToProblem();
     }
 }

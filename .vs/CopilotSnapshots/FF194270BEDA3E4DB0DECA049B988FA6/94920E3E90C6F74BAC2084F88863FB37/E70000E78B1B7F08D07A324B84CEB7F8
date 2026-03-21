@@ -1,0 +1,19 @@
+﻿using Application.Common.Results;
+using Application.Contracts.Invoice;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.Generic;
+
+namespace Application.Services.Invoice;
+
+public interface IInvoiceServices
+{
+    Task<Result<IEnumerable<InvoiceResponse>>> GetAllUnpayed(int customerId);
+    Task<Result<InvoiceResponse>> Get(int invoiceId);
+
+    Task<Result<InvoiceResponse>> Add(int UserId, AddInvoiceRequest request);
+
+    Task<Result> InvoicePayment(int UserId, AddInvoicePaymentRequest request);
+
+    Task<Result> FullDelete(int InvoiceId);
+}

@@ -10,5 +10,5 @@ namespace Application.Services.Address;
 
 public interface IAddressServices
 {
-    Result<IEnumerable<AddressResponse>> GetAll();
+    Task<Result<IEnumerable<AddressResponse>>> GetAll();
 }
