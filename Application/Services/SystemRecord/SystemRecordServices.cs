@@ -1,4 +1,5 @@
-﻿using Application.Common.Errors;
+﻿using Alsalamony.Application.Common.Models;
+using Application.Common.Errors;
 using Application.Common.Interfaces;
 using Application.Common.Results;
 using Application.Contracts.SystemRecord;
@@ -61,5 +62,11 @@ public class SystemRecordServices : ISystemRecordServices
         }
 
         return Result.Success<IEnumerable<SystemRecordsResponse>>(r);
+    }
+
+    public Task<Result<PaginatedList<SystemRecordsResponse>>> GetAllPaged(RequestFilters requestFilters, string userRole)
+    {
+
+        throw new NotImplementedException();
     }
 }

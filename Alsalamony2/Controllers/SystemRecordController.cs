@@ -5,6 +5,7 @@ using Application.Services.SystemRecord;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Alsalamony.Application.Common.Models;
 
 namespace Alsalamony2.Controllers;
 
@@ -27,6 +28,14 @@ public class SystemRecordController : ControllerBase
     {
         var re = await systemRecordServices.GetAllNotFinished(User.IsAdmin());
         return re.IsSuccess? Ok(re.Value) : re.ToProblem();
+    }
+
+    [HttpGet("AllPaged")]
+    [Authorize]
+    public async Task<IActionResult> GetAllPaged([FromQuery] RequestFilters requestFilters) 
+    {
+        var re = await systemRecordServices.GetAllPaged(requestFilters, User.IsAdmin()? "Admin":"User");
+        return re.IsSuccess ? Ok(re.Value) : re.ToProblem();
     }
 
     [HttpPut("Finish/{id}")]

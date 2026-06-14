@@ -407,6 +407,27 @@
   },
   {
     "ContainingType": "Alsalamony2.Controllers.SystemRecordController",
+    "Method": "GetAllPaged",
+    "RelativePath": "SystemRecord/AllPaged",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alsalamony2.Controllers.SystemRecordController",
     "Method": "Finish",
     "RelativePath": "SystemRecord/Finish/{id}",
     "HttpMethod": "PUT",
